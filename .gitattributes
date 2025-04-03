@@ -1,0 +1,80 @@
+# 自动检测文本文件并执行LF标准化
+* text=auto
+
+# 文档
+*.md text diff=markdown
+*.txt text
+*.rst text
+
+# 源代码
+*.js text
+*.jsx text
+*.ts text
+*.tsx text
+*.css text
+*.scss text
+*.html text
+*.json text
+*.yml text
+*.yaml text
+*.xml text
+*.svg text
+*.py text
+*.rb text
+*.php text
+*.java text
+*.c text
+*.cpp text
+*.h text
+*.hpp text
+*.cs text
+*.go text
+*.rs text
+*.swift text
+*.kt text
+*.kts text
+*.sh text eol=lf
+*.bat text eol=crlf
+*.cmd text eol=crlf
+
+# 图形
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.webp binary
+*.tiff binary
+*.bmp binary
+*.psd binary
+*.ai binary
+*.eps binary
+*.pdf binary
+
+# 字体
+*.ttf binary
+*.eot binary
+*.woff binary
+*.woff2 binary
+
+# 音频和视频
+*.mp3 binary
+*.mp4 binary
+*.wav binary
+*.avi binary
+*.mov binary
+*.flv binary
+*.mkv binary
+
+# 压缩文件
+*.zip binary
+*.tar binary
+*.gz binary
+*.rar binary
+*.7z binary
+
+# 其他二进制文件
+*.exe binary
+*.dll binary
+*.so binary
+*.dylib binary 

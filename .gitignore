@@ -1,0 +1,87 @@
+# 操作系统生成的文件
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# 编辑器目录和文件
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+*.swp
+*.swo
+*~
+
+# 临时文件
+*.log
+*.tmp
+*.temp
+*.bak
+*.backup
+*.old
+
+# 构建输出
+/dist/
+/build/
+/out/
+/target/
+/bin/
+/obj/
+
+# 依赖目录
+/node_modules/
+/vendor/
+/.venv/
+/venv/
+/env/
+/.env/
+/.env.local/
+/.env.development.local/
+/.env.test.local/
+/.env.production.local/
+
+# 缓存目录
+/.cache/
+/.parcel-cache/
+/.next/
+/.nuxt/
+/.output/
+/.svelte-kit/
+
+# 文档生成
+/docs/_build/
+/docs/_static/
+/docs/_templates/
+/docs/api/
+
+# 测试覆盖率报告
+/coverage/
+/.nyc_output/
+
+# 本地配置文件
+.env
+.env.local
+.env.development
+.env.test
+.env.production
+config.local.js
+config.local.json
+config.local.yml
+config.local.yaml
+
+# 日志文件
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# 其他
+*.pem
+*.cert
+*.key
+*.crt
+*.csr
+*.pfx
+*.p12 

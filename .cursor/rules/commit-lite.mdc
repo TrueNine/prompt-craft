@@ -1,0 +1,17 @@
+---
+description: git commit
+globs: 
+alwaysApply: false
+---
+please follow this format for git commit messages:
+
+<type>(<scope>): <subject>
+
+<body>
+
+**Rules**:
+- Type: Choose from [feat, fix, docs, style, refactor, perf, test, chore, revert]
+- Scope: Choose from [core, ui, api, auth, data, config]
+- Subject: Use noun phrases, max 50 chars, no period
+- Body: List changes with `-` prefix, be specific
+- Avoid vague terms like "optimize" or "improve UX"

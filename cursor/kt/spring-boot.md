@@ -5,9 +5,6 @@ alwaysApply: false
 ---
 - spring-boot3
 - jakarta-ee
-- redis
-- postgresql
-- jimmer
 
 ### 开发实践
 
@@ -31,23 +28,27 @@ alwaysApply: false
   - API：`get`/`post`/`put`/`delete`
 - 禁用词：`ID`（统一使用`id`/`Id`）
 
-
+- 命名规范：
+  - 避免使用全大写缩写（如：使用`userId`而不是`userID`）
+  - 避免使用后缀命名（如：使用`User`而不是`UserApi`）
+  - 实体标识符统一使用`id`小写形式
 
 ```kotlin
 /**
- * # 类标题（H1）
- * > 功能概要
+ * # 用户服务
+ * > 提供用户相关的核心功能
  *
- * 详细描述（支持Markdown）
- * @param 参数描述（data class参数需在此说明）
+ * 处理用户注册、认证等基础服务
+ * @param name 用户名称
+ * @param email 电子邮箱
  */
-class ExampleApi {
+class User {
   /**
-   * ## 方法标题
-   * @param 使用Jimmer DSL操作数据库
-   * @return 响应体结构说明
+   * ## 获取用户信息
+   * @param userId 用户标识符
+   * @return 用户详细信息
    */
-  fun get() {
+  fun get(userId: RefId) {
     // ...
   }
 }

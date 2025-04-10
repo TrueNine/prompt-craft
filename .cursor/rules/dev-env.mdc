@@ -8,6 +8,10 @@ all recommendations and operations are specific to this environment, no cross - 
 editor: Cursor (vscode fork)
 # local dev env
 os: windows 11 24H2
+cpu: intel i7 14650HX
+gpu: nvidia 4070 8g laptop
+memory: 32gb
+disk: 1t
 shell: powerShell 7.3.10
 wsl: ubuntu 24.04
 nodejs: 20.17.1

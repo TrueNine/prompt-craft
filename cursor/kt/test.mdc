@@ -8,9 +8,6 @@ alwaysApply: false
 - spring-boot-test
 - spring-mockmvc
 - testcontainers
-- jimmer
-- redis
-- postgresql
 
 # 测试框架选择规则
 1. 基础测试框架：

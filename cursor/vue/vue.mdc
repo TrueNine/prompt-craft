@@ -1,5 +1,8 @@
-# 技术栈
-
+---
+description: 
+globs: *.vue
+alwaysApply: false
+---
 ## 核心框架
 - Vue 3
 - Vue Router 4
@@ -15,8 +18,6 @@
 - 复杂场景：Element Plus
 - 工具库：VueUse > lodash-es
 
-# 开发规范
-
 ## 命名约定
 - 组件名：PascalCase
 - 事件名：PascalCase
@@ -26,6 +27,14 @@
 - ✗ 禁用原生 DOM API
 - ✗ 禁止手动导入自动引入的函数
 - ✓ 保持组件代码简洁
+- ✓ Props 和 Emits 使用接口在组件内部单独定义
+- ✓ Emits 必须使用最新的元组定义语法
+- ✓ 组件嵌套层级应保持精简
+
+## 自动导入
+- 遵循项目 vite.config.ts 的自动导入配置
+- 禁止编写多余的 import 语句
+- 优先使用自动导入的组合式 API
 
 ## 组件模板
 ```vue
@@ -48,14 +57,4 @@ const emit = defineEmits<Emits>()
     @exampleEvent="handleExampleEvent" 
   />
 </template>
-```
-
-# 目录结构
-```
-src/
-  ├─ pages/      # 页面组件
-  │  ├─ a/       # 后台页面
-  │  └─ wxpa/    # 移动端页面
-  ├─ components/ # 公共组件
-  └─ layouts/    # 布局组件
 ```

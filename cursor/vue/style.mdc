@@ -1,5 +1,11 @@
+---
+description: 
+globs: *.tsx,*.vue,*.css,*.vue,*.html,*.scss
+alwaysApply: false
+---
 # 设计系统
 - 设计风格：Material Design
+- 同时支持移动端和PC端，响应式布局
 - 仅在复杂交互场景下考虑其他设计系统
 - 保持视觉一致性和用户体验
 

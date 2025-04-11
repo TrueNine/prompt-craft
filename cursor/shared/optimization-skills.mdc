@@ -1,0 +1,131 @@
+---
+description: 编码优化强制规范
+globs: 
+alwaysApply: false
+---
+## Early Return
+
+可以减少嵌套，提高代码可读性
+
+```ts
+ // bad code
+function processOrder(order) {
+  if (order) {
+    if (order.items) {
+      if (order.items.length > 0) {
+        if (order.status === 'pending') {
+          // 处理订单
+        }
+      }
+    }
+  }
+}
+
+// good code
+function processOrder(order) {
+  if (!order) return;
+  if (!order.items?.length) return;
+  if (order.status !== 'pending') return;
+  // 处理订单
+}
+```
+
+## Lazy Function
+
+惰性函数是一种编程优化技术，通过延迟计算或避免重复计算来提高性能。它在不同领域的应用场景如下： 
+
+### 浏览器兼容性检查
+
+在首次调用时检测浏览器特性（如事件监听、API支持），后续调用直接使用缓存对应函数获取结果，避免重复检测。
+
+```ts
+  function addEvent(element, type, handler) {
+    if (window.addEventListener) {
+        addEvent = (element, type, handler) => element.addEventListener(type, handler);
+    } else if (window.attachEvent) {
+        addEvent = (element, type, handler) => element.attachEvent('on' + type, handler);
+    }
+    addEvent(element, type, handler);
+}
+```
+### 文件系统操作
+延迟打开文件或读取配置，直到实际需要时执行。
+
+```go
+var config *Config
+func GetConfig() *Config {
+  if config == nil {
+      config = loadConfigFromFile()
+  }
+  return config
+}
+```
+
+## no if or while without {}
+
+绝对不允许出现不加 `{}` 的 `if` 或 `while` 语句。
+
+```c
+if((err = SSLHashSHA1.update(&hashCtx, &signedParams)) != 0)
+  goto fail;
+  goto fail; 
+```
+
+## value condition to table search
+
+将值条件转换为表查找，可以提高代码可读性和性能。
+
+```ts
+const valueAndLabel = {
+  '1': 'label1',
+  '2': 'label2',
+  '3': 'label3',
+}
+// good code for table search
+function getLabel(value) {
+  return valueAndLabel[value]
+}
+// bad code for if else if
+function getLabel(value) {
+  if (value === '1') {
+    return 'label1'
+  } else if (value === '2') {
+    return 'label2'
+  } else if (value === '3') {
+    return 'label3'
+  }
+}
+// badcode for switch
+function getLabel(value) {
+  switch (value) {
+    case '1': return 'label1'
+    case '2': return 'label2'
+    case '3': return 'label3'
+  }
+}
+```
+
+## Be cautious with non-null assertions
+
+在具有空安全特性的编程语言中（如 TypeScript、Kotlin、Swift 等），应该谨慎使用非空断言操作符。盲目使用可能导致运行时错误。
+
+```ts
+// bad code
+function processUser(user: User | null) {
+  // 危险!假设 user 一定不为空
+  console.log(user!.name)  
+}
+
+// good code - use null check
+function processUser(user: User | null) {
+  if (!user) {
+    return
+  }
+  console.log(user.name)
+}
+
+// good code - use optional chain
+function processUser(user: User | null) {
+  console.log(user?.name)
+}
+```

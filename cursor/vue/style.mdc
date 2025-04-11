@@ -7,6 +7,7 @@ alwaysApply: false
 - 设计风格：Material Design
 - 同时支持移动端和PC端，响应式布局
 - 仅在复杂交互场景下考虑其他设计系统
+- 如需书写CSS，则只能使用 SCSS
 - 保持视觉一致性和用户体验
 
 # 样式实现规范
@@ -15,6 +16,7 @@ alwaysApply: false
 - 组件样式隔离：禁止在组件内部编写样式
 - 原子化优先：Vue组件优先使用原子化CSS
 - 组件优先：优先使用组件库 + 原子化CSS的组合方案
+- 在任何时候，应注意适配亮暗主题
 
 ## 动画与过渡
 - Transition Duration: 100ms

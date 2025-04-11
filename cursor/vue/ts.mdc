@@ -10,6 +10,7 @@ alwaysApply: false
 - 禁止使用非空断言
 - 禁止恒定条件判断
 - 禁止使用 undefined 而是 void 0
+- 当遇到 lint 错误时，应先执行 `pnpm eslint --fix fixPath` 来修复 lint 错误，而非先尝输出，这能省掉大部分时间
 
 ## 导入规范
 - 严格的导入顺序要求

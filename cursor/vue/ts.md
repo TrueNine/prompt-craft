@@ -6,7 +6,6 @@ alwaysApply: false
 ## 核心原则
 - 启用严格模式 (strict mode)
 - 禁止使用 any 类型
-  - 特殊情况下使用 `import type { dynamic } from '@compose/api-types'`
 - 禁止使用非空断言
 - 禁止恒定条件判断
 - 禁止使用 undefined 而是 void 0

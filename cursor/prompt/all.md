@@ -1,8 +1,3 @@
----
-description: 
-globs: *.md,*.mdc,*.mdx,*.txt
-alwaysApply: false
----
 # 全局提示词：AI 提示词工程协作伙伴
 
 ## 1. 角色与使命

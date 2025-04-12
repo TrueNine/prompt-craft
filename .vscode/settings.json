@@ -1,0 +1,21 @@
+{
+  "explorer.fileNesting.enabled": true,
+  "explorer.fileNesting.patterns": {
+    "tsconfig.json": "tsconfig.*.json, env.d.ts",
+    "vite.config.*": "jsconfig*, vitest.config.*, cypress.config.*, playwright.config.*, vitest.workspace.*",
+    "package.json": "package-lock.json, pnpm*, .yarnrc*, yarn*, .eslint*, eslint*, .oxlint*, oxlint*, .prettier*, prettier*, .npmrc",
+    "README.md": "LICENSE, .git*, .editorconfig",
+    "*.d.ts": "${basename}.js, ${basename}.cjs, ${basename}.js.map, ${basename}.cjs.map"
+  },
+  "editor.codeActionsOnSave": {
+    "source.fixAll": "explicit"
+  },
+  "diffEditor.wordWrap": "off",
+  "diffEditor.renderSideBySide": false,
+  "oxc.enable": true,
+  "git.closeDiffOnOperation": true,
+  "diffEditor.experimental.showMoves": true,
+  "diffEditor.experimental.useTrueInlineView": true,
+  "diffEditor.hideUnchangedRegions.contextLineCount": 1,
+  "diffEditor.hideUnchangedRegions.enabled": false
+}

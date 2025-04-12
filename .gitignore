@@ -5,7 +5,6 @@ desktop.ini
 
 # 编辑器目录和文件
 .idea/
-.vscode/
 *.sublime-project
 *.sublime-workspace
 *.swp
@@ -84,4 +83,4 @@ pnpm-debug.log*
 *.crt
 *.csr
 *.pfx
-*.p12 
+*.p12

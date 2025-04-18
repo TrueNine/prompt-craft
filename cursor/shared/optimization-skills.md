@@ -1,5 +1,5 @@
 ---
-description: Coding Optimization Guidelines
+description: Mandatory Static Language Optimization Rules
 globs: 
 alwaysApply: false
 ---
@@ -143,3 +143,163 @@ function processUserOptional(user: User | null) {
 
 -   **No End-of-Line Comments:** Avoid placing comments at the end of a code line.
 -   **Language:** Use English for library code comments. Use Chinese for business logic comments (including documentation comments).
+
+End-of-line comments reduce code readability, especially in code reviews or diffs, and may introduce CI security risks (e.g., accidental code disabling or leaking sensitive info). Always use standalone comment lines above the code.
+
+## Avoid Unnecessary Object Creation
+
+Reduce object creation, especially in loops or high-frequency code paths, to minimize GC pressure and improve performance.
+
+```java
+// Bad: Creating new String in each iteration
+for (int i = 0; i < n; i++) {
+    String s = new String("example");
+}
+
+// Good: Reuse objects when possible
+String s = "example";
+for (int i = 0; i < n; i++) {
+    // Use s
+}
+```
+
+## Prefer Immutable Data Structures
+
+Favor immutable (final/const/val/readonly) variables and data structures to reduce side effects and improve thread safety.
+
+```kotlin
+// Good: Immutable variable
+val name = "Alice"
+
+// Bad: Mutable variable
+var name = "Alice"
+```
+
+## Choose the Right Data Structure
+
+Select the most appropriate data structure for your use case (e.g., Map for lookups, List for ordered access) to optimize performance and readability.
+
+```go
+// Good: Use map for fast lookup
+userAges := map[string]int{"Alice": 30, "Bob": 25}
+
+// Bad: Linear search in slice
+users := []User{...}
+for _, u := range users {
+    if u.Name == "Alice" { ... }
+}
+```
+
+## Minimize Type Casting and Boxing/Unboxing
+
+Avoid frequent type casting and boxing/unboxing operations. Prefer primitive types when possible.
+
+```csharp
+// Bad: Boxing/unboxing in a loop
+object sum = 0;
+for (int i = 0; i < 1000; i++) {
+    sum = (int)sum + i;
+}
+
+// Good: Use primitive type
+int sum = 0;
+for (int i = 0; i < 1000; i++) {
+    sum += i;
+}
+```
+
+## Leverage Compiler Optimizations
+
+Use keywords like `inline`, `final`, `sealed`, `const` to help the compiler optimize your code.
+
+```kotlin
+inline fun log(message: String) { println(message) }
+
+final class MyClass {}
+```
+
+## Avoid Reflection and Dynamic Invocation
+
+Reflection and dynamic invocation are flexible but slow. Prefer static, compile-time constructs whenever possible.
+
+```java
+// Bad: Using reflection
+Method m = obj.getClass().getMethod("foo");
+m.invoke(obj);
+
+// Good: Direct method call
+obj.foo();
+```
+
+## Release Resources Promptly
+
+Always release resources (files, DB connections, locks) as soon as possible. Use language features for automatic management.
+
+```go
+// Good: Use defer for automatic resource release
+f, err := os.Open("file.txt")
+if err != nil { return }
+defer f.Close()
+```
+
+```java
+// Good: try-with-resources
+try (InputStream in = new FileInputStream("file.txt")) {
+    // ...
+}
+```
+
+## Minimize Lock Granularity and Avoid Deadlocks
+
+Keep lock scope as small as possible. Use lock-free structures or atomic variables when feasible.
+
+```java
+// Good: Minimize lock scope
+synchronized(lock) {
+    // Only critical section
+}
+```
+
+## Optimize Loops and Recursion
+
+Avoid redundant calculations inside loops. Use tail recursion optimization if supported.
+
+```kotlin
+tailrec fun factorial(n: Int, acc: Int = 1): Int =
+    if (n <= 1) acc else factorial(n - 1, acc * n)
+```
+
+## Use Static Analysis and Automated Testing
+
+Leverage static analysis tools (e.g., SonarQube, Clippy, Go vet) and maintain high test coverage to catch issues early.
+
+```
+# Example: Run static analysis in Go
+$ go vet ./...
+```
+
+## Handle Exceptions Explicitly
+
+Catch only exceptions you can handle. Let others propagate. Use language-specific error handling idioms.
+
+```rust
+// Good: Use Result for error handling
+fn read_file() -> Result<String, std::io::Error> {
+    std::fs::read_to_string("foo.txt")
+}
+```
+
+## Layered and Decoupled Code Design
+
+Follow the Single Responsibility Principle. Use dependency injection, interface segregation, and modular design for maintainability and scalability.
+
+```java
+// Good: Interface-based design
+public interface PaymentService {
+    void pay(Order order);
+}
+
+public class PaypalPaymentService implements PaymentService {
+    public void pay(Order order) { /* ... */ }
+}
+```

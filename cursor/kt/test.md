@@ -3,104 +3,73 @@ description:
 globs: *Test.kt,*Test.java
 alwaysApply: false
 ---
-# 可用测试技术栈
-- jUnit5
-- junit5-params
-- kotlin.test
-- mockk
-- spring-boot-test
-- testcontainers
 
-# 测试规范与最佳实践
+# 测试技术栈与规范（Kotlin/Java）
 
-## 1. 测试框架选择
+可用依赖：jUnit5、junit5-params、kotlin.test、mockk、spring-boot-test、testcontainers
 
-- **基础测试框架**
-  - Java 项目：使用 JUnit 5
-- **Mock 框架**
-  - Kotlin 项目：优先使用 MockK
-  - Java 项目：使用 Mockito
-- **集成测试框架**
-  - 数据库测试：必须使用 Testcontainers
-  - Redis 测试：Testcontainers + Redis 模块
-  - 消息队列测试：使用对应的 Testcontainers 模块
+---
 
-## 2. 测试命名规范
+## 测试框架选型
 
-- **类名**：被测试类名 + `Test`
-- **方法名**：用反引号包裹，描述测试场景
-  - 正向用例：`方法名 输入条件 返回预期结果`
-  - 异常用例：`方法名 失败场景 抛出预期异常`
-  - 边界用例：`方法名 边界条件 返回预期结果`
-  - 性能用例：`方法名 性能指标 返回预期结果`
+- Java：JUnit 5
+- Kotlin Mock 框架：MockK
+- Java Mock 框架：Mockito
+- 集成测试：Testcontainers（数据库/Redis/消息队列）
 
+---
 
-## 3. 代码示例
+## 命名规范
+
+- 测试类名：被测类名 + Test
+- 测试方法名：用反引号包裹，描述场景
+  - 正向：`方法名 输入条件 返回预期结果`
+  - 异常：`方法名 失败场景 抛出预期异常`
+  - 边界：`方法名 边界条件 返回预期结果`
+  - 性能：`方法名 性能指标 返回预期结果`
+
+---
+
+## Kotlin 风格测试编写规则
+
+- 测试代码应充分体现 Kotlin 语言特性：
+  - 善用扩展函数、数据类、解构、空安全等 Kotlin 语法糖
+  - 命名风格遵循 Kotlin 惯例，变量名简洁、可读性强
+  - 断言优先使用 kotlin.test 提供的方法，表达式化书写
+  - Mock 框架优先选用 mockk，避免 Java 习惯的 Mockito
+  - 测试代码整体尽量函数式、表达式化，减少冗余和样板代码
+  - 使用 mockMvc 进行接口测试时，也要保持 Kotlin 风味：推荐用 Kotlin 的 DSL、扩展函数和空安全特性封装 mockMvc 操作，断言和链式调用表达式化，避免冗余的 Java 风格写法，充分利用 Kotlin 语法优势
+
+---
+
+## 代码示例
 
 ```kotlin
-package com.example
-
-// 推荐导入
-import kotlin.test.Test
-import kotlin.test.BeforeTest
-import kotlin.test.AfterTest
-import jakarta.annotation.Resource
-// JUnit5 参数化测试相关导入
+import kotlin.test.*
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
 
-@AutoConfigureMockMvc // 测试 spring webmvc 接口时按需添加
-@SpringBootTest // 涉及 spring bean 注入时按需添加
-class ExampleApiTest { // 被测试类名称+Test
-  lateinit var mockMvc: MockMvc @Resource set // setter 注入
-  lateinit var testData: Any
-
-  @BeforeTest
-  fun setup() {
-    // 测试前准备
-  }
-
-  @AfterTest
-  fun after() {
-    // 测试后清理
-  }
+class ExampleApiTest {
+  @BeforeTest fun setup() {}
+  @AfterTest fun after() {}
 
   @Test
-  fun `getUserDatas 失败 后返回 403 响应码`() {
-    // 测试逻辑
-  }
+  fun `getUserDatas 失败后返回 403 响应码`() {}
 
   @Test
-  fun `postUserDatas 保证 接口幂等性`() {
-    // 测试逻辑
-  }
+  fun `postUserDatas 保证接口幂等性`() {}
 
-  // JUnit5 参数化测试示例
   @ParameterizedTest
   @ValueSource(strings = ["admin", "guest", "user"])
-  fun `getUserRole 输入不同角色 返回预期权限`(role: String) {
-    // 参数化测试逻辑，根据 role 检查返回权限
-  }
+  fun `getUserRole 输入不同角色 返回预期权限`(role: String) {}
 }
 ```
 
-## 4. 推荐依赖
+---
 
-- jUnit5
-- junit5-params
-- mockk
-- spring-boot-test
-- testcontainers
+## 测试失败处理建议
 
-## 5. 测试失败处理与建议
-
-测试失败时，建议遵循如下流程和思考方式：
-
-1. **明确失败原因**
-   - 在断言或日志中输出清晰、具体的失败信息，便于快速定位问题。
-2. **提出改进建议**
-   - 针对失败场景，给出可行的修复或优化建议，帮助开发者高效解决问题。
-3. **反思被测对象设计**
-   - 不仅关注测试代码本身，也要思考是否可以通过优化或修改被测试对象（如业务逻辑、接口设计等）来根本解决问题。
-4. **团队协作与评审**
-   - 在评审测试用例和失败案例时，鼓励团队成员主动提出改进建议，共同提升代码与设计质量。
+- 明确失败原因，断言/日志输出具体信息
+- 针对失败场景，提出修复或优化建议
+- 反思被测对象设计，必要时优化业务逻辑
+- 主动提出改进建议，共同提升质量

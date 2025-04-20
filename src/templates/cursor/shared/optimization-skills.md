@@ -7,7 +7,7 @@ alwaysApply: false
 
 Use early returns to reduce nesting and improve code readability.
 
-```kt
+```kotlin
 // Bad: Deeply nested conditions
 fun processOrder(order: Order?) {
     if (order != null) {

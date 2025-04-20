@@ -5,8 +5,8 @@ import { defineConfig } from 'vite'
 export default defineConfig(
   configureViteFragment({
     lib: {
-      entry: ['index.ts'],
-      formats: ['es', 'cjs'],
+      entry: ['index.ts', 'bin/create.ts'],
+      formats: ['cjs'],
     },
     dts: {
       tsconfigPath: './tsconfig.build.json',

@@ -1,39 +1,54 @@
 {
-  "name": "@compose/prompt-craft",
-  "version": "1.0.0",
+  "name": "@compose/create-prompt",
+  "type": "module",
+  "version": "1.0.1",
   "packageManager": "pnpm@10.8.1",
-  "description": "",
+  "description": "Prompt Craft is an AI-powered prompt engineering tool that utilizes artificial intelligence to generate and improve AI prompts, creating a self-improving loop that continuously optimizes the editor experience.",
   "author": "TrueNine",
   "license": "GNU Lesser General Public License v2.1",
+  "homepage": "https://github.com/TrueNine/prompt-craft#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TrueNine/prompt-craft.git"
+  },
+  "bugs": {
+    "url": "https://github.com/TrueNine/prompt-craft/issues"
+  },
   "keywords": [
     "AI",
     "prompt",
     "craft"
   ],
   "main": "index.js",
+  "bin": {
+    "create-prompt": "bin/create.cjs",
+    "create-@compose-prompt": "bin/create.cjs"
+  },
   "scripts": {
+    "pub-c": "pnpm --dir dist pub",
+    "pub": "run-s build pub-c",
     "build-c": "vite build",
-    "build": "run-s type-check build-c",
+    "build": "run-s type-check lint build-c",
     "type-check": "vue-tsc --noEmit",
     "test": "vitest run",
     "lint": "eslint --fix"
   },
   "dependencies": {
-    "typescript": "^5.8.3"
+    "typescript": "catalog:"
   },
   "devDependencies": {
-    "@antfu/eslint-config": "^4.12.0",
-    "@compose/config-vite-fragment": "^1.0.3",
-    "@compose/eslint-config": "^0.0.95",
-    "@compose/eslint9-config": "^1.0.0",
-    "@compose/tsconfig": "^1.0.3",
-    "@tsconfig/node22": "^22.0.1",
-    "@types/node": "^22.14.1",
-    "jiti": "^2.4.2",
-    "npm-run-all": "^4.1.5",
-    "vite": "^6.3.2",
-    "vite-plugin-dts": "^4.5.3",
-    "vitest": "^3.1.1",
-    "vue-tsc": "^2.2.8"
+    "@antfu/eslint-config": "catalog:",
+    "@compose/config-vite-fragment": "catalog:",
+    "@compose/eslint-config": "catalog:",
+    "@compose/eslint9-config": "catalog:",
+    "@compose/tsconfig": "catalog:",
+    "@tsconfig/node22": "catalog:",
+    "@types/node": "catalog:",
+    "jiti": "catalog:",
+    "npm-run-all": "catalog:",
+    "vite": "catalog:",
+    "vite-plugin-dts": "catalog:",
+    "vitest": "catalog:",
+    "vue-tsc": "catalog:"
   }
 }

@@ -2,12 +2,12 @@ import { describe, expect, it, vi } from 'vitest'
 import { cursorKtPrompts, cursorSharedPrompts, cursorVuePrompts, templateDirNames } from '../cursorSharedPrompts'
 
 vi.mock('../utils', () => ({
-  getContent: (file: any) => {
+  getContent: (file: unknown) => {
     // 根据文件名返回唯一 mock 内容，保证每个属性唯一
     if (typeof file === 'string')
       return `mock-content-${file}`
-    if (file && file.default)
-      return `mock-content-${file.default}`
+    if (typeof file === 'object' && file !== null && 'default' in (file as Record<string, unknown>))
+      return `mock-content-${(file as { default: string }).default}`
     return `mock-content-unique-${Math.random()}`
   },
 }))

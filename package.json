@@ -30,7 +30,7 @@
     "build-c": "vite build",
     "build": "run-s type-check lint build-c",
     "type-check": "vue-tsc --noEmit",
-    "test": "vitest run",
+    "test": "vitest run --reporter verbose",
     "lint": "eslint --fix"
   },
   "dependencies": {

@@ -1,6 +1,6 @@
 ---
 description: 当前开发环境配置
-globs: 
+globs:
 alwaysApply: false
 ---
 # env rules

@@ -1,5 +1,5 @@
 ---
-description: 
+description:
 globs: *Test.kt,*Test.java
 alwaysApply: false
 ---

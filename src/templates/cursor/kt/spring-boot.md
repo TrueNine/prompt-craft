@@ -1,5 +1,5 @@
 ---
-description: 
+description:
 globs: *Api.kt,*Service.kt,*Repository.kt,*Controller.kt,*Config.kt
 alwaysApply: false
 ---

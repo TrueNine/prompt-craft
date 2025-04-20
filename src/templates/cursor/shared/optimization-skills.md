@@ -1,32 +1,34 @@
 ---
 description: Mandatory Static Language Optimization Rules
-globs: 
+globs:
 alwaysApply: false
 ---
 ## Prefer Early Returns
 
 Use early returns to reduce nesting and improve code readability.
 
-```ts
- // Bad: Deeply nested conditions
-function processOrder(order) {
-  if (order) {
-    if (order.items) {
-      if (order.items.length > 0) {
-        if (order.status === 'pending') {
-          // Process order
+```kt
+// Bad: Deeply nested conditions
+fun processOrder(order: Order?) {
+    if (order != null) {
+        if (order.items != null) {
+            if (order.items.isNotEmpty()) {
+                if (order.status == "pending") {
+                    // Process order
+                }
+            }
         }
-      }
     }
-  }
 }
 
 // Good: Flat structure with early returns
-function processOrder(order) {
-  if (!order) return;
-  if (!order.items?.length) return;
-  if (order.status !== 'pending') return;
-  // Process order
+fun processOrder(order: Order?) {
+    if (order == null) return
+    if (order.items.isNullOrEmpty()) return
+    if (order.status != "pending") {
+        // ...
+    }
+    // Process order
 }
 ```
 
@@ -36,15 +38,19 @@ Lazy initialization delays computation or resource allocation until actually nee
 
 **Browser Compatibility Checks:** Detect features (e.g., event listeners) on the first call and cache the appropriate function for subsequent calls, avoiding redundant checks.
 
-```ts
+```kotlin
 // Example: Event listener function cached after first call
-function addEvent(element, type, handler) {
-  if (window.addEventListener) {
-      addEvent = (element, type, handler) => element.addEventListener(type, handler);
-  } else if (window.attachEvent) {
-      addEvent = (element, type, handler) => element.attachEvent('on' + type, handler);
-  }
-  addEvent(element, type, handler); // Call the determined function
+var addEvent: ((element: Element, type: String, handler: () -> Unit) -> Unit)? = null
+
+fun addEvent(element: Element, type: String, handler: () -> Unit) {
+    if (addEvent == null) {
+        addEvent = if (/* check for modern event listener support */) {
+            { el, t, h -> /* el.addEventListener(t, h) */ }
+        } else {
+            { el, t, h -> /* fallback for older browsers */ }
+        }
+    }
+    addEvent?.invoke(element, type, handler)
 }
 ```
 
@@ -71,7 +77,7 @@ if((err = SSLHashSHA1.update(&hashCtx, &signedParams)) != 0)
   // This goto is conditional
   goto fail;
   // This goto is *not* conditional
-  goto fail; 
+  goto fail;
 // Good: Braces clearly define the scope
 if((err = SSLHashSHA1.update(&hashCtx, &signedParams)) != 0) {
   goto fail;
@@ -82,60 +88,59 @@ if((err = SSLHashSHA1.update(&hashCtx, &signedParams)) != 0) {
 
 Transform value-based conditional logic (`if/else if` or `switch`) into table lookups (e.g., using objects or maps) for better readability and often better performance.
 
-```ts
+```kotlin
 // Good: Using a lookup table
-const valueAndLabel = {
-  '1': 'label1',
-  '2': 'label2',
-  '3': 'label3',
-};
+val valueAndLabel = mapOf(
+    1 to "label1",
+    2 to "label2",
+    3 to "label3"
+)
 
-function getLabel(value) {
-  return valueAndLabel[value]; // Direct lookup
+fun getLabel(value: Int): String? {
+    return valueAndLabel[value] // Direct lookup
 }
 
 // Bad: Using if/else if
-function getLabelIfElse(value) {
-  if (value === '1') {
-    return 'label1';
-  } else if (value === '2') {
-    return 'label2';
-  } else if (value === '3') {
-    return 'label3';
-  }
+fun getLabelIfElse(value: Int): String? {
+    return if (value == 1) {
+        "label1"
+    } else if (value == 2) {
+        "label2"
+    } else if (value == 3) {
+        "label3"
+    } else null
 }
 
-// Bad: Using switch
-function getLabelSwitch(value) {
-  switch (value) {
-    case '1': return 'label1';
-    case '2': return 'label2';
-    case '3': return 'label3';
-  }
+// Bad: Using when
+fun getLabelWhen(value: Int): String? {
+    return when (value) {
+        1 -> "label1"
+        2 -> "label2"
+        3 -> "label3"
+        else -> null
+    }
 }
 ```
 
 ## Avoid Non-Null Assertions
 
-In languages with null safety (like TypeScript, Kotlin, Swift), use non-null assertion operators (`!`) cautiously. Prefer explicit null checks or optional chaining (`?.`) to prevent potential runtime errors.
+In languages with null safety (like TypeScript, Kotlin, Swift), use non-null assertion operators (`!`) cautiously. Prefer explicit null checks or safe calls (`?.`) to prevent potential runtime errors.
 
-```ts
+```kotlin
 // Bad: Risky non-null assertion
-function processUserAssertion(user: User | null) {
-  console.log(user!.name); // Crashes if user is null
+fun processUserAssertion(user: User?) {
+    println(user!!.name) // Crashes if user is null
 }
 
 // Good: Explicit null check
-function processUserCheck(user: User | null) {
-  if (!user) {
-    return; // Safely handle null case
-  }
-  console.log(user.name);
+fun processUserCheck(user: User?) {
+    if (user == null) return // Safely handle null case
+    println(user.name)
 }
 
-// Good: Optional chaining
-function processUserOptional(user: User | null) {
-  console.log(user?.name); // Returns undefined if user is null, no crash
+// Good: Safe call
+fun processUserOptional(user: User?) {
+    println(user?.name) // Prints null if user is null, no crash
 }
 ```
 

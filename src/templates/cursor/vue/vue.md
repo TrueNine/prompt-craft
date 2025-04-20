@@ -1,5 +1,5 @@
 ---
-description: 
+description:
 globs: *.vue
 alwaysApply: false
 ---
@@ -52,9 +52,9 @@ const emit = defineEmits<Emits>()
 </script>
 
 <template>
-  <Example 
-    :exampleProp="exampleProp" 
-    @exampleEvent="handleExampleEvent" 
+  <Example
+    :exampleProp="exampleProp"
+    @exampleEvent="handleExampleEvent"
   />
 </template>
 ```

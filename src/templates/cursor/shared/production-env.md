@@ -1,6 +1,6 @@
 ---
 description: 生产部署环境配置
-globs: 
+globs:
 alwaysApply: false
 ---
 # production deploy env

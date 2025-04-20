@@ -1,6 +1,4 @@
 // 获取 templates 目录下所有一级目录名
-export const templateDirNames = ['cursor', 'lingma', 'copilot', 'trae']
-
 import ktSpringBoot from '@/templates/cursor/kt/spring-boot.md'
 import ktTest from '@/templates/cursor/kt/test.md'
 import allRole from '@/templates/cursor/shared/all-role.md'
@@ -14,6 +12,8 @@ import vueTest from '@/templates/cursor/vue/test.md'
 import vueTs from '@/templates/cursor/vue/ts.md'
 import vueVue from '@/templates/cursor/vue/vue.md'
 import { getContent } from './utils'
+
+export const templateDirNames = ['cursor', 'lingma', 'copilot', 'trae']
 
 export const cursorSharedPrompts = {
   all: getContent(all),

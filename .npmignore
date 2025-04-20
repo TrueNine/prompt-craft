@@ -1,12 +1,6 @@
-docs
-node_modules
-.DS_Store
-.git*
-src
-/*.config.*
-/*.tsconfig.*.json
-/.cursor
-/.vscode
-/.idea
-/pnpm-*
-/.editorconfig
+# 忽略所有文件
+*
+# 但保留 README.md、package.json 和 dist 目录
+!README.md
+!package.json
+!dist/

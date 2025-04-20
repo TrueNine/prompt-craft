@@ -1,7 +1,7 @@
 {
   "name": "@compose/create-prompt",
-  "type": "module",
-  "version": "1.0.12",
+  "type": "commonjs",
+  "version": "1.0.13",
   "packageManager": "pnpm@10.8.1",
   "description": "Prompt Craft is an AI-powered prompt engineering tool that utilizes artificial intelligence to generate and improve AI prompts, creating a self-improving loop that continuously optimizes the editor experience.",
   "author": "TrueNine",
@@ -21,12 +21,9 @@
     "cursor"
   ],
   "exports": {
-    ".": {
-      "import": "./dist/prompt-craft.mjs"
-    }
+    ".": "./dist/prompt-craft.cjs"
   },
   "main": "dist/prompt-craft.cjs",
-  "module": "dist/prompt-craft.mjs",
   "bin": {
     "create-prompt": "dist/prompt-craft.cjs",
     "create-@compose-prompt": "dist/prompt-craft.cjs"

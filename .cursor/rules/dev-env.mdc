@@ -1,6 +1,6 @@
 ---
-description: 当前开发环境配置
-globs: 
+description: mandatory local dev environment (strict enforcement)
+globs:
 alwaysApply: false
 ---
 # env rules
@@ -22,3 +22,4 @@ jdk: openjdk 23
 testcontainers: 1.19.0
 go: 1.24.2
 hosts: lvh.me -> 127.0.0.1
+

@@ -2,10 +2,9 @@
 import { existsSync } from 'node:fs'
 import { resolve } from 'node:path'
 import process from 'node:process'
-import { other } from './other'
 
 console.log('\u2728 欢迎使用 Prompt Craft 项目初始化脚本！')
-other()
+
 // 简单参数解析
 const args = process.argv.slice(2)
 if (args.includes('--help') || args.includes('-h')) {

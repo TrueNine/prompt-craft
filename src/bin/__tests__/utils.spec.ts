@@ -1,8 +1,8 @@
-import { describe, expect, it, vi, beforeEach, afterEach } from 'vitest'
-import { camelToKebab } from '../utils'
-import { getContent } from '../utils'
+import { Buffer } from 'node:buffer'
 import * as fs from 'node:fs'
 import * as path from 'node:path'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
+import { camelToKebab, getContent } from '../utils'
 
 describe('camelToKebab', () => {
   it('普通驼峰命名', () => {
@@ -54,19 +54,23 @@ vi.stubGlobal('__dirname', fakeDir)
 
 // 修正 path.resolve 的 mock，避免 TypeError
 vi.mock('node:path', async (importOriginal) => {
-  const mod: any = await importOriginal()
+  const mod = await importOriginal()
+  if (typeof mod !== 'object' || mod === null)
+    throw new Error('Invalid module')
   return {
-    ...mod,
-    resolve: vi.fn((...args: any[]) => mod.resolve(...args)),
+    ...(mod as Record<string, unknown>),
+    resolve: vi.fn((...args: unknown[]) => (mod as { resolve: (...args: unknown[]) => unknown }).resolve(...args)),
   }
 })
 
 // 修正 fs.readFileSync 的 mock，避免 TypeError
 vi.mock('node:fs', async (importOriginal) => {
-  const mod: any = await importOriginal()
+  const mod = await importOriginal()
+  if (typeof mod !== 'object' || mod === null)
+    throw new Error('Invalid module')
   return {
-    ...mod,
-    readFileSync: vi.fn((...args: any[]) => mod.readFileSync(...args)),
+    ...(mod as Record<string, unknown>),
+    readFileSync: vi.fn((...args: unknown[]) => (mod as { readFileSync: (...args: unknown[]) => unknown }).readFileSync(...args)),
   }
 })
 
@@ -77,7 +81,7 @@ describe('getContent', () => {
 
   it('should decode base64 data url', () => {
     const str = 'hello, 世界!'
-    const base64 = Buffer.from(str, 'utf-8').toString('base64')
+    const base64 = (Buffer as unknown as { from: (input: string, enc: string) => Buffer }).from(str, 'utf-8').toString('base64')
     const input = `data:text/plain;base64,${base64}`
     expect(getContent(input)).toBe(str)
   })
@@ -119,14 +123,18 @@ describe('getContent', () => {
   it('should throw if file not found', () => {
     const fakePath = 'notfound.txt'
     vi.spyOn(path, 'resolve').mockReturnValue('/notfound.txt')
-    vi.spyOn(fs, 'readFileSync').mockImplementation(() => { throw new Error('not found') })
+    vi.spyOn(fs, 'readFileSync').mockImplementation(() => {
+      throw new Error('not found')
+    })
     expect(() => getContent(fakePath)).toThrow('not found')
   })
 
   it('should handle empty string input', () => {
     // 这里会尝试读取文件，应该抛错
     vi.spyOn(path, 'resolve').mockReturnValue('/empty')
-    vi.spyOn(fs, 'readFileSync').mockImplementation(() => { throw new Error('empty') })
+    vi.spyOn(fs, 'readFileSync').mockImplementation(() => {
+      throw new Error('empty')
+    })
     expect(() => getContent('')).toThrow('empty')
   })
 

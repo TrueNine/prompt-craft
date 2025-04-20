@@ -1,6 +1,6 @@
 catalog:
   '@antfu/eslint-config': ^4.12.0
-  '@compose/config-vite-fragment': ^1.0.7
+  '@compose/config-vite-fragment': ^1.0.8
   '@compose/eslint-config': ^0.0.95
   '@compose/eslint9-config': ^1.0.0
   '@compose/tsconfig': ^1.0.3

@@ -12,6 +12,7 @@
     },
     "types": [
       "node",
+      "vite/client",
       "./env.d.ts"
     ]
   },

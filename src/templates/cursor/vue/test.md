@@ -23,11 +23,11 @@ alwaysApply: false
 ## 命名规范
 
 - 测试文件名：被测文件名 + `.spec.ts` 或 `.spec.tsx`
-- 测试用例名：用反引号包裹，描述场景
-  - 正向：`方法名/组件名 输入条件 返回预期结果`
-  - 异常：`方法名/组件名 失败场景 抛出预期异常`
-  - 边界：`方法名/组件名 边界条件 返回预期结果`
-  - 性能：`方法名/组件名 性能指标 返回预期结果`
+- 测试用例名：直接用字符串描述场景
+  + 正向：'方法名/组件名 输入条件 返回预期结果'
+  + 异常：'方法名/组件名 失败场景 抛出预期异常'
+  + 边界：'方法名/组件名 边界条件 返回预期结果'
+  + 性能：'方法名/组件名 性能指标 返回预期结果'
 
 ---
 
@@ -45,7 +45,7 @@ alwaysApply: false
 
 ## 代码示例
 
-```ts
+```typescript
 import { mount } from '@vue/test-utils'
 import { describe, it, expect, beforeEach, afterEach } from 'vitest'
 import MyButton from '@/components/MyButton.vue'

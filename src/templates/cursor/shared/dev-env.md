@@ -1,5 +1,5 @@
 ---
-description: 当前开发环境配置
+description: mandatory local dev environment (strict enforcement)
 globs:
 alwaysApply: false
 ---

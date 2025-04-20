@@ -21,13 +21,14 @@ export function getContent(input: string): string {
  * 例如：myVariableName -> my-variable-name
  */
 export function camelToKebab(str: string): string {
-  if (!str) return ''
+  if (!str)
+    return ''
   // 下划线后跟大写字母，先变 _-，后续再修正
   let result = str.replace(/_([A-Z])/g, '_-$1')
   // 其它所有大写前加 -
   result = result.replace(/([a-z0-9])([A-Z])/g, '$1-$2')
   result = result.replace(/([A-Z])([A-Z])(?=[a-z])/g, '$1-$2')
-  result = result.replace(/([^a-zA-Z0-9\-_])([A-Z])/g, '$1-$2')
+  result = result.replace(/([^\w\-])([A-Z])/g, '$1-$2')
   result = result.replace(/([A-Z])/g, '-$1')
   // 合并多余的 -，去头部 -
   result = result.replace(/-+/g, '-')

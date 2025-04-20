@@ -1,7 +1,7 @@
-import all from '@/templates/cursor/shared/all.md'
 import allRole from '@/templates/cursor/shared/all-role.md'
-import optimizationSkills from '@/templates/cursor/shared/optimization-skills.md'
+import all from '@/templates/cursor/shared/all.md'
 import devEnv from '@/templates/cursor/shared/dev-env.md'
+import optimizationSkills from '@/templates/cursor/shared/optimization-skills.md'
 import productionEnv from '@/templates/cursor/shared/production-env.md'
 
 import { getContent } from './utils'

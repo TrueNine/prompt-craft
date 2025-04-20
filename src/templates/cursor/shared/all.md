@@ -40,3 +40,10 @@
 - 核心功能必须有单元测试覆盖
 - 必须验证所有公开接口的边界条件
 - 生成单元测试时，必须需先查看测试相关规则
+
+# 规则参考
+
+- 执行命令行，优化开发环境等，应优先考虑参考 [dev-env.mdc](mdc:.cursor/rules/dev-env.mdc)
+- 生成、优化、重构代码时，应充分参考 [production-env.mdc](mdc:.cursor/rules/production-env.mdc) 来选择优化策略
+- 无论何时，都应参考 [optimization-skills.mdc](mdc:.cursor/rules/optimization-skills.mdc) 来优化、重构生成代码
+- 编写、重构、优化测试代码时，应遵循 [test.mdc](mdc:.cursor/rules/test.mdc)

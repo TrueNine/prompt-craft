@@ -34,6 +34,9 @@
     "lint": "eslint --fix"
   },
   "dependencies": {
+    "chalk": "catalog:",
+    "commander": "catalog:",
+    "inquirer": "catalog:",
     "typescript": "catalog:"
   },
   "devDependencies": {

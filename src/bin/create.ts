@@ -2,6 +2,7 @@
 import { existsSync } from 'node:fs'
 import { resolve } from 'node:path'
 import process from 'node:process'
+import { runCli } from './command'
 
 console.log('\u2728 欢迎使用 Prompt Craft 项目初始化脚本！')
 
@@ -21,5 +22,5 @@ if (existsSync(targetDir)) {
 }
 
 console.log(`\uD83D\uDCC1 即将创建项目: ${projectName}`)
-// 这里可以扩展：调用 vite 或自定义模板逻辑
-// ...
+
+runCli()

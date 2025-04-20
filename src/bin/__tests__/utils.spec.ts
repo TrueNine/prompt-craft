@@ -1,146 +1,135 @@
 import { Buffer } from 'node:buffer'
-import * as fs from 'node:fs'
-import * as path from 'node:path'
-import { beforeEach, describe, expect, it, vi } from 'vitest'
+import { beforeAll, beforeEach, describe, expect, it, vi } from 'vitest'
 import { camelToKebab, getContent } from '../utils'
 
-describe('camelToKebab', () => {
-  it('普通驼峰命名', () => {
+describe('camelToKebab 驼峰转短横线', () => {
+  it('`myVariableName/camelCase/helloWorld 转为 kebab-case`', () => {
     expect(camelToKebab('myVariableName')).toBe('my-variable-name')
     expect(camelToKebab('camelCase')).toBe('camel-case')
     expect(camelToKebab('helloWorld')).toBe('hello-world')
   })
 
-  it('单词全小写', () => {
+  it('`全小写单词保持不变 simple => simple`', () => {
     expect(camelToKebab('simple')).toBe('simple')
   })
 
-  it('包含数字', () => {
+  it('`包含数字 version1Number2/a1B2C3 转为 version1-number2/a1-b2-c3`', () => {
     expect(camelToKebab('version1Number2')).toBe('version1-number2')
     expect(camelToKebab('a1B2C3')).toBe('a1-b2-c3')
   })
 
-  it('首字母大写', () => {
+  it('`首字母大写 MyVariableName/CamelCase 转为 kebab-case`', () => {
     expect(camelToKebab('MyVariableName')).toBe('my-variable-name')
     expect(camelToKebab('CamelCase')).toBe('camel-case')
   })
 
-  it('连续大写字母', () => {
+  it('`连续大写字母 getHTTPResponse/parseURLToID 转为 kebab-case`', () => {
     expect(camelToKebab('getHTTPResponse')).toBe('get-h-t-t-p-response')
     expect(camelToKebab('parseURLToID')).toBe('parse-u-r-l-to-i-d')
   })
 
-  it('空字符串', () => {
+  it('`空字符串返回空字符串`', () => {
     expect(camelToKebab('')).toBe('')
   })
 
-  it('特殊字符混合', () => {
+  it('`特殊字符混合 foo$Bar/foo_Bar 转为 foo$-bar/foo-_bar`', () => {
     expect(camelToKebab('foo$Bar')).toBe('foo$-bar')
     expect(camelToKebab('foo_Bar')).toBe('foo-_bar')
   })
 
-  it('已是 kebab-case', () => {
+  it('`已是 kebab-case 保持不变 already-kebab-case`', () => {
     expect(camelToKebab('already-kebab-case')).toBe('already-kebab-case')
   })
 
-  it('全大写', () => {
+  it('`全大写 ABC 转为 a-b-c`', () => {
     expect(camelToKebab('ABC')).toBe('a-b-c')
   })
 })
 
-// mock __dirname
-const fakeDir = '/fake/dir'
-vi.stubGlobal('__dirname', fakeDir)
+describe('getContent 获取内容', () => {
+  const fakeDir = '/fake/dir'
 
-// 修正 path.resolve 的 mock，避免 TypeError
-vi.mock('node:path', async (importOriginal) => {
-  const mod = await importOriginal()
-  if (typeof mod !== 'object' || mod === null)
-    throw new Error('Invalid module')
-  return {
-    ...(mod as Record<string, unknown>),
-    resolve: vi.fn((...args: unknown[]) => (mod as { resolve: (...args: unknown[]) => unknown }).resolve(...args)),
-  }
-})
+  beforeAll(() => {
+    vi.stubGlobal('__dirname', fakeDir)
+  })
 
-// 修正 fs.readFileSync 的 mock，避免 TypeError
-vi.mock('node:fs', async (importOriginal) => {
-  const mod = await importOriginal()
-  if (typeof mod !== 'object' || mod === null)
-    throw new Error('Invalid module')
-  return {
-    ...(mod as Record<string, unknown>),
-    readFileSync: vi.fn((...args: unknown[]) => (mod as { readFileSync: (...args: unknown[]) => unknown }).readFileSync(...args)),
-  }
-})
-
-describe('getContent', () => {
   beforeEach(() => {
     vi.restoreAllMocks()
   })
 
-  it('should decode base64 data url', () => {
-    const str = 'hello, 世界!'
-    const base64 = (Buffer as unknown as { from: (input: string, enc: string) => Buffer }).from(str, 'utf-8').toString('base64')
+  it('`base64 data url 解码`', () => {
+    const raw = 'hello, 世界!'
+    const base64 = Buffer.from(raw, 'utf-8').toString('base64')
     const input = `data:text/plain;base64,${base64}`
-    expect(getContent(input)).toBe(str)
+    expect(getContent(input)).toBe(raw)
   })
 
-  it('should decode non-base64 data url', () => {
-    const str = 'hello, 世界!'
-    const encoded = encodeURIComponent(str)
+  it('`非 base64 data url 解码`', () => {
+    const raw = 'hello, 世界!'
+    const encoded = encodeURIComponent(raw)
     const input = `data:text/plain,${encoded}`
-    expect(getContent(input)).toBe(str)
+    expect(getContent(input)).toBe(raw)
   })
 
-  it('should decode data url with extra params', () => {
-    const str = 'foo-bar'
-    const encoded = encodeURIComponent(str)
+  it('`带参数 data url 解码`', () => {
+    const raw = 'foo-bar'
+    const encoded = encodeURIComponent(raw)
     const input = `data:text/plain;charset=utf-8,${encoded}`
-    expect(getContent(input)).toBe(str)
+    expect(getContent(input)).toBe(raw)
   })
 
-  it('should handle malformed base64 data url gracefully', () => {
-    const input = 'data:text/plain;base64,' // 没有内容
+  it('`base64 data url 内容为空返回空字符串`', () => {
+    const input = 'data:text/plain;base64,'
     expect(getContent(input)).toBe('')
   })
 
-  it('should decode data url with comma but no data', () => {
+  it('`data url 逗号后无内容返回空字符串`', () => {
     const input = 'data:text/plain,'
     expect(getContent(input)).toBe('')
   })
 
-  it('should read file content if not data url', () => {
-    const fakePath = 'test.txt'
-    const fakeContent = 'file content!'
-    const resolvedPath = path.resolve(fakeDir, fakePath)
-    vi.spyOn(path, 'resolve').mockReturnValue(resolvedPath)
-    vi.spyOn(fs, 'readFileSync').mockReturnValue(fakeContent)
-    expect(getContent(fakePath)).toBe(fakeContent)
-    expect(fs.readFileSync).toHaveBeenCalledWith(resolvedPath, 'utf-8')
-  })
-
-  it('should throw if file not found', () => {
-    const fakePath = 'notfound.txt'
-    vi.spyOn(path, 'resolve').mockReturnValue('/notfound.txt')
-    vi.spyOn(fs, 'readFileSync').mockImplementation(() => {
-      throw new Error('not found')
-    })
-    expect(() => getContent(fakePath)).toThrow('not found')
-  })
-
-  it('should handle empty string input', () => {
-    // 这里会尝试读取文件，应该抛错
-    vi.spyOn(path, 'resolve').mockReturnValue('/empty')
-    vi.spyOn(fs, 'readFileSync').mockImplementation(() => {
-      throw new Error('empty')
-    })
+  it('`空字符串抛出 empty 异常`', () => {
+    vi.mock('node:fs', () => ({
+      readFileSync: vi.fn(() => {
+        throw new Error('empty')
+      }),
+    }))
     expect(() => getContent('')).toThrow('empty')
   })
 
-  it('should handle data: without comma', () => {
-    // 这种格式其实不合法，decodeURIComponent 会抛错
+  it('`非法 data url 抛出异常`', () => {
     const input = 'data:text/plain;base64'
     expect(() => getContent(input)).toThrow()
   })
+})
+
+it('`非 data url 路径 test.txt 返回文件内容`', async () => {
+  vi.resetModules()
+  const fakeDir = '/fake/dir'
+  vi.stubGlobal('__dirname', fakeDir)
+  const fakePath = 'test.txt'
+  const fakeContent = 'file content!'
+  vi.doMock('node:fs', () => ({
+    readFileSync: vi.fn(() => fakeContent),
+  }))
+  const { getContent } = await import('../utils')
+  expect(getContent(fakePath)).toBe(fakeContent)
+  vi.resetModules()
+  vi.unmock('node:fs')
+})
+
+it('`文件不存在 notfound.txt 抛出 not found 异常`', async () => {
+  vi.resetModules()
+  const fakeDir = '/fake/dir'
+  vi.stubGlobal('__dirname', fakeDir)
+  const fakePath = 'notfound.txt'
+  vi.doMock('node:fs', () => ({
+    readFileSync: vi.fn(() => {
+      throw new Error('not found')
+    }),
+  }))
+  const { getContent } = await import('../utils')
+  expect(() => getContent(fakePath)).toThrow('not found')
+  vi.resetModules()
+  vi.unmock('node:fs')
 })

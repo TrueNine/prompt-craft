@@ -3,14 +3,16 @@ import { readFileSync } from 'node:fs'
 import { resolve } from 'node:path'
 
 export function getContent(input: string): string {
-  if (!input) throw new Error('empty')
+  if (!input)
+    throw new Error('empty')
   if (input.startsWith('data:')) {
     const base64Match = input.match(/^data:.*?;base64,(.*)$/)
     if (base64Match) {
       return base64Match[1] ? Buffer.from(base64Match[1], 'base64').toString('utf-8') : ''
     }
     const idx = input.indexOf(',')
-    if (idx === -1) throw new Error('Invalid data url: missing comma')
+    if (idx === -1)
+      throw new Error('Invalid data url: missing comma')
     const data = input.slice(idx + 1)
     return data ? decodeURIComponent(data) : ''
   }

@@ -8,17 +8,20 @@ export default defineConfig(
       entry: ['index.ts', 'bin/create.ts'],
       formats: ['cjs'],
     },
-    dts: {
-      tsconfigPath: './tsconfig.build.json',
-    },
+    dts: false,
     packageJson: {
       buildTool: 'pnpm',
     },
   }, {
+    publicDir: 'src/templates',
     resolve: {
       alias: {
         '@': fileURLToPath(new URL('./src', import.meta.url)),
       },
+    },
+    assetsInclude: ['**/*.md'],
+    build: {
+      assetsInlineLimit: 0,
     },
   }),
 )

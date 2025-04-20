@@ -1,11 +1,19 @@
 {
-  "extends": ["@compose/tsconfig/tsconfig.json"],
+  "extends": [
+    "@compose/tsconfig/tsconfig.json"
+  ],
   "compilerOptions": {
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.build.tsbuildinfo",
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"]
-    }
+      "@/*": [
+        "./src/*"
+      ]
+    },
+    "types": [
+      "node",
+      "./env.d.ts"
+    ]
   },
   "include": [
     "src/**/*.ts",

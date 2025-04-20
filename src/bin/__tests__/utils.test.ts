@@ -1,6 +1,5 @@
-import { describe, it, expect } from 'vitest'
+import { describe, expect, it } from 'vitest'
 import { camelToKebab } from '../utils'
-
 
 describe('camelToKebab', () => {
   it('普通驼峰命名', () => {

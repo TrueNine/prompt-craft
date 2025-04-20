@@ -1,7 +1,7 @@
 {
   "name": "@compose/create-prompt",
   "type": "module",
-  "version": "1.0.6",
+  "version": "1.0.12",
   "packageManager": "pnpm@10.8.1",
   "description": "Prompt Craft is an AI-powered prompt engineering tool that utilizes artificial intelligence to generate and improve AI prompts, creating a self-improving loop that continuously optimizes the editor experience.",
   "author": "TrueNine",
@@ -17,18 +17,25 @@
   "keywords": [
     "AI",
     "prompt",
-    "craft"
+    "craft",
+    "cursor"
   ],
-  "main": "index.js",
+  "exports": {
+    ".": {
+      "import": "./dist/prompt-craft.mjs"
+    }
+  },
+  "main": "dist/prompt-craft.cjs",
+  "module": "dist/prompt-craft.mjs",
   "bin": {
-    "create-prompt": "bin/create.cjs",
-    "create-@compose-prompt": "bin/create.cjs"
+    "create-prompt": "dist/prompt-craft.cjs",
+    "create-@compose-prompt": "dist/prompt-craft.cjs"
   },
   "scripts": {
-    "pub-c": "pnpm --dir dist pub",
+    "pub-c": "pnpm publish",
     "pub": "run-s build pub-c",
-    "build-c": "vite build",
-    "build": "run-s type-check lint build-c",
+    "build:unbuild": "unbuild",
+    "build": "run-s type-check lint test build:unbuild",
     "type-check": "vue-tsc --noEmit",
     "test": "vitest run --reporter verbose",
     "lint": "eslint --fix"
@@ -36,21 +43,26 @@
   "dependencies": {
     "chalk": "catalog:",
     "commander": "catalog:",
-    "inquirer": "catalog:",
-    "typescript": "catalog:"
+    "inquirer": "catalog:"
   },
   "devDependencies": {
     "@antfu/eslint-config": "catalog:",
     "@compose/config-vite-fragment": "catalog:",
-    "@compose/eslint-config": "catalog:",
     "@compose/eslint9-config": "catalog:",
     "@compose/tsconfig": "catalog:",
+    "@rollup/plugin-alias": "catalog:",
+    "@rollup/plugin-terser": "catalog:",
+    "@rollup/plugin-url": "catalog:",
+    "@rollup/plugin-virtual": "catalog:",
     "@tsconfig/node22": "catalog:",
     "@types/node": "catalog:",
+    "eslint": "catalog:",
+    "fast-glob": "catalog:",
     "jiti": "catalog:",
     "npm-run-all": "catalog:",
+    "typescript": "catalog:",
+    "unbuild": "catalog:",
     "vite": "catalog:",
-    "vite-plugin-dts": "catalog:",
     "vitest": "catalog:",
     "vue-tsc": "catalog:"
   }

@@ -4,6 +4,8 @@ import { resolve } from 'node:path'
 import process from 'node:process'
 import { runCli } from './command'
 
+export * from './cursorSharedPrompts'
+
 console.log('\u2728 欢迎使用 Prompt Craft 项目初始化脚本！')
 
 // 简单参数解析

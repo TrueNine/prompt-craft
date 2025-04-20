@@ -1,10 +1,18 @@
 import { Buffer } from 'node:buffer'
 import { readFileSync } from 'node:fs'
 import { resolve } from 'node:path'
+import process from 'node:process'
 
-export function getContent(input: string): string {
-  if (!input)
+export function getContent(input: string, cwd: string = process.cwd()): string {
+  if (!input) {
     throw new Error('empty')
+  }
+  if (input.startsWith('export default "data:') || input.startsWith('export default \'data:')) {
+    const match = input.match(/^export default ["'](data:.*)["']$/)
+    if (!match)
+      throw new Error('Invalid export default data url')
+    input = match[1]
+  }
   if (input.startsWith('data:')) {
     const base64Match = input.match(/^data:.*?;base64,(.*)$/)
     if (base64Match) {
@@ -16,7 +24,7 @@ export function getContent(input: string): string {
     const data = input.slice(idx + 1)
     return data ? decodeURIComponent(data) : ''
   }
-  return readFileSync(resolve(__dirname, input), 'utf-8')
+  return readFileSync(resolve(cwd, input), 'utf-8')
 }
 
 /**

@@ -1,0 +1,12 @@
+docs
+node_modules
+.DS_Store
+.git*
+src
+/*.config.*
+/*.tsconfig.*.json
+/.cursor
+/.vscode
+/.idea
+/pnpm-*
+/.editorconfig

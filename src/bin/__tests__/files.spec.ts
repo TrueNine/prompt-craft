@@ -58,7 +58,7 @@ describe('writeTextFileFromCwd', () => {
     const content = 'hello world'
     const absPath = writeTextFileFromCwd(tempCwd, file, content)
     expect(absPath).toBe(path.join(tempCwd, file))
-    expect(fs.readFileSync(absPath!, 'utf8')).toBe(content)
+    expect(fs.readFileSync(absPath, 'utf8')).toBe(content)
   })
 
   it('`已存在文件会被覆盖`', () => {
@@ -76,7 +76,7 @@ describe('writeTextFileFromCwd', () => {
     const file = 'a/b/c/d.txt'
     const content = 'deep'
     const absPath = writeTextFileFromCwd(tempCwd, file, content)
-    expect(fs.readFileSync(absPath!, 'utf8')).toBe(content)
+    expect(fs.readFileSync(absPath, 'utf8')).toBe(content)
   })
 
   it('`非法路径：绝对路径 抛出异常`', () => {
@@ -100,14 +100,14 @@ describe('writeTextFileFromCwd', () => {
     const absPath = writeTextFileFromCwd(tempCwd, file, content)
     // 非法字符全部变为 _
     expect(absPath).toBe(path.join(tempCwd, 'a_________.txt'))
-    expect(fs.readFileSync(absPath!, 'utf8')).toBe(content)
+    expect(fs.readFileSync(absPath, 'utf8')).toBe(content)
   })
 
   it('`支持不同编码写入`', () => {
     const file = 'utf16.txt'
     const content = '你好，世界！'
     const absPath = writeTextFileFromCwd(tempCwd, file, content, 'utf16le')
-    expect(fs.readFileSync(absPath!, 'utf16le')).toBe(content)
+    expect(fs.readFileSync(absPath, 'utf16le')).toBe(content)
   })
 
   it('`写入失败时返回 undefined`', () => {

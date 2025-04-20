@@ -101,6 +101,20 @@ describe('getContent 获取内容', () => {
     const input = 'data:text/plain;base64'
     expect(() => getContent(input)).toThrow()
   })
+
+  it('`export default data: base64 场景能正确解码`', () => {
+    const raw = `---\ndescription: 测试内容\n---\n正文内容\n`
+    const base64 = Buffer.from(raw, 'utf-8').toString('base64')
+    const input = `export default \"data:text/markdown;base64,${base64}\"`
+    expect(getContent(input)).toBe(raw)
+  })
+
+  it('`export default data: base64 场景（单引号）能正确解码`', () => {
+    const raw = `---\ndescription: 测试内容\n---\n正文内容\n`
+    const base64 = Buffer.from(raw, 'utf-8').toString('base64')
+    const input = `export default 'data:text/markdown;base64,${base64}'`
+    expect(getContent(input)).toBe(raw)
+  })
 })
 
 it('`非 data url 路径 test.txt 返回文件内容`', async () => {
@@ -112,8 +126,8 @@ it('`非 data url 路径 test.txt 返回文件内容`', async () => {
   vi.doMock('node:fs', () => ({
     readFileSync: vi.fn(() => fakeContent),
   }))
-  const { getContent } = await import('../utils')
-  expect(getContent(fakePath)).toBe(fakeContent)
+  const { getContent: mockedGetContent } = await import('../utils')
+  expect(mockedGetContent(fakePath)).toBe(fakeContent)
   vi.resetModules()
   vi.unmock('node:fs')
 })
@@ -128,8 +142,8 @@ it('`文件不存在 notfound.txt 抛出 not found 异常`', async () => {
       throw new Error('not found')
     }),
   }))
-  const { getContent } = await import('../utils')
-  expect(() => getContent(fakePath)).toThrow('not found')
+  const { getContent: mockedGetContent } = await import('../utils')
+  expect(() => mockedGetContent(fakePath)).toThrow('not found')
   vi.resetModules()
   vi.unmock('node:fs')
 })

@@ -25,7 +25,7 @@ alwaysApply: false
    - 运行 `pnpm vue-tsc --noEmit`，修复所有类型（type）错误，直至无可修复项。
 
 2. **单元测试检查与修复**
-   - 运行 `pnpm vitest run <file_path>`，修复所有测试（test）错误，直至无可修复项。
+   - 运行 `pnpm vitest run <file_path> --reporter verbose`，修复所有测试（test）错误，直至无可修复项。
 
 3. **错误分析与循环**
    - 每次修复后，重新执行上述所有步骤，直至 eslint、type、test 三类错误均为 0，或遇到无法自动修复的问题。

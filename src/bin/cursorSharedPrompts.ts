@@ -64,20 +64,20 @@ export function injectConversation(path: string, name: string): string {
 }
 
 export const cursorKtPrompts = {
-  test: getContent(ktTest),
-  springBoot: getContent(ktSpringBoot),
+  test: injectConversation(ktTest, 'test'),
+  springBoot: injectConversation(ktSpringBoot, 'springBoot'),
 }
 
 export const cursorPromptPrompts = {
-  md: getContent(promptMd),
+  md: injectConversation(promptMd, 'md'),
 }
 
 export const cursorVuePrompts = {
-  ts: getContent(vueTs),
-  test: getContent(vueTest),
-  style: getContent(vueStyle),
-  vue: getContent(vueVue),
-  testFix: getContent(vueTestFix),
+  ts: injectConversation(vueTs, 'ts'),
+  test: injectConversation(vueTest, 'test'),
+  style: injectConversation(vueStyle, 'style'),
+  vue: injectConversation(vueVue, 'vue'),
+  testFix: injectConversation(vueTestFix, 'testFix'),
 }
 
 export const cursorRelativeFolderPath = '.cursor/rules'

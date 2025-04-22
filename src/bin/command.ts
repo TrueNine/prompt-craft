@@ -38,6 +38,18 @@ program
   })
 
 /**
+ * 将文件名转换为 kebab-case
+ * @param name 原始文件名
+ * @returns 转换后的文件名
+ */
+function toKebabCase(name: string): string {
+  return name
+    .replace(/([a-z])([A-Z])/g, '$1-$2')
+    .replace(/[\s_]+/g, '-')
+    .toLowerCase()
+}
+
+/**
  * 写入规则文件
  * @param options 选项
  * @param rulesDir 规则文件目录
@@ -48,32 +60,47 @@ function writeRules(options: CommandSelectedOptions, rulesDir: string = resolve(
 
   // 写入共享规则
   Object.entries(cursorSharedPrompts).forEach(([name, content]) => {
-    writeRuleFile(rulesDir, name, content)
+    writeRuleFile(rulesDir, toKebabCase(name), content)
   })
 
   // 根据语言类型写入特定规则
   if (options.usedLanguages === 'kotlin+spring-boot') {
     Object.entries(cursorKtPrompts).forEach(([name, content]) => {
-      writeRuleFile(rulesDir, name, content)
+      writeRuleFile(rulesDir, toKebabCase(name), content)
     })
   } else if (options.usedLanguages === 'typescript+vue') {
     Object.entries(cursorVuePrompts).forEach(([name, content]) => {
-      writeRuleFile(rulesDir, name, content)
+      writeRuleFile(rulesDir, toKebabCase(name), content)
     })
   }
 }
 
 export async function runCli(): Promise<void> {
   try {
-    // 这里先使用默认值，后续可以通过命令行参数或交互式选择来设置
+    interface LanguagePrompt {
+      usedLanguages: 'typescript+vue' | 'kotlin+spring-boot'
+    }
+
+    const { usedLanguages } = await inquirer.prompt<LanguagePrompt>([
+      {
+        type: 'list',
+        name: 'usedLanguages',
+        message: '请选择项目使用的技术栈：',
+        choices: [
+          { name: 'TypeScript + Vue', value: 'typescript+vue' as const },
+          { name: 'Kotlin + Spring Boot', value: 'kotlin+spring-boot' as const },
+        ],
+      },
+    ])
+
     const options: CommandSelectedOptions = {
-      usedLanguages: 'typescript+vue',
+      usedLanguages,
     }
 
     writeRules(options)
-    console.log('✨ 规则文件写入成功！')
+    console.log(chalk.green('✨ 规则文件写入成功！'))
   } catch (error) {
-    console.error('❌ 执行失败：', error)
+    console.error(chalk.red('❌ 执行失败：'), error)
     process.exit(1)
   }
 }

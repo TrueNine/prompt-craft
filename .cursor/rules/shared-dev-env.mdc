@@ -3,6 +3,7 @@ description: mandatory local dev environment (strict enforcement)
 globs:
 alwaysApply: false
 ---
+
 # env rules
 all recommendations and operations are specific to this environment, no cross - system analogies.
 editor: Cursor (vscode fork)
@@ -22,4 +23,3 @@ jdk: openjdk 23
 testcontainers: 1.19.0
 go: 1.24.2
 hosts: lvh.me -> 127.0.0.1
-

@@ -6,11 +6,10 @@ alwaysApply: true
 
 # 📖 规则参考
 
-- 强制编码守则：[shared-dev-standard.mdc](mdc:.cursor/rules/shared-dev-standard.mdc)
-- 开发环境配置：[shared-dev-env.mdc](mdc:.cursor/rules/shared-dev-env.mdc)
-- 生产环境配置：[shared-prod-env.mdc](mdc:.cursor/rules/shared-prod-env.mdc)
-- 提交消息规范：[shared-git-commit-message-standard.mdc](mdc:.cursor/rules/shared-git-commit-message-standard.mdc)
+- 强制编码守则：[dev-standard.mdc](mdc:.cursor/rules/shared-dev-standard.mdc)
 - 单元测试守则：[test.mdc](mdc:.cursor/rules/test.mdc)
+- 开发环境配置：[dev-env.mdc](mdc:.cursor/rules/shared-dev-env.mdc)
+- 生产环境配置：[prod-env.mdc](mdc:.cursor/rules/shared-prod-env.mdc)
 
 # 🎯 核心原则
 

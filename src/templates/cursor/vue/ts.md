@@ -4,10 +4,6 @@ globs: *.ts,*.tsx,*.vue
 alwaysApply: false
 ---
 
-## 核心原则
-
-- 任何时候，应当遵循 [@optimization-skills.mdc](mdc:.cursor/rules/optimization-skills.mdc) 的优化建议指导，来编写代码
-
 ## 编码规范
 - 启用严格模式 (strict mode)
 - 禁止使用 any 类型

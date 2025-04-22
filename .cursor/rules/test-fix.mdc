@@ -3,8 +3,11 @@ description:
 globs:
 alwaysApply: false
 ---
+
 # 单元测试修复
-## 测试工pm
+## 测试工具环境
+
+- pnpm
 - vitest
 - eslint
 - vue-tsc

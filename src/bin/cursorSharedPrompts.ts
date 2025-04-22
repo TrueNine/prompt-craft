@@ -6,6 +6,7 @@ import sharedAllRole from '@/templates/cursor/shared/all-role.md'
 import sharedAll from '@/templates/cursor/shared/all.md'
 import sharedDevEnv from '@/templates/cursor/shared/dev-env.md'
 import sharedDevStandard from '@/templates/cursor/shared/dev-standard.md'
+import sharedGitCommitMessageStandard from '@/templates/cursor/shared/git-commit-message-standard.md'
 import sharedProdEnv from '@/templates/cursor/shared/prod-env.md'
 import vueStyle from '@/templates/cursor/vue/style.md'
 import vueTestFix from '@/templates/cursor/vue/test-fix.md'
@@ -23,6 +24,7 @@ export const cursorSharedPrompts = {
   sharedDevEnv: getContent(sharedDevEnv),
   sharedProdEnv: getContent(sharedProdEnv),
   sharedAllRole: getContent(sharedAllRole),
+  sharedGitCommitMessageStandard: getContent(sharedGitCommitMessageStandard),
 }
 
 export const cursorCommonPrompts = {

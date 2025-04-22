@@ -1,8 +1,9 @@
 ---
-description:
-globs: *.md,*.mdc,*.mdx,*.txt
+description: 
+globs: *.md,*.mdc
 alwaysApply: false
 ---
+
 # 个人简介
 
 - 职位：Anyshare 内部高级工程师

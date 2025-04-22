@@ -1,8 +1,9 @@
 ---
-description: Mandatory Static Language Optimization Rules
+description: 强制编码守则
 globs:
 alwaysApply: false
 ---
+
 ## 可选：分层解耦
 
 单一职责，接口隔离，模块化
@@ -33,7 +34,7 @@ defer f.Close()
 
 ```csharp
 int sum = 0;
-for (int i = 0; i < 1000; i++)
+for (int i = 0; i < 1000; i++) 
 {
   sum += i;
 }
@@ -98,7 +99,7 @@ if (x) {
 
 ```kotlin
 // 不推荐
-if (a != null) {
+if (a != null) { 
   if (a.b != null) {
     // ...
   }

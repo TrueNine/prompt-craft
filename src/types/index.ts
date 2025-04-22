@@ -1,4 +1,4 @@
-export type LanguageType = 'kotlin+spring-boot' | 'typescript+vue'
+export type LanguageType = 'kotlin+spring-boot' | 'typescript+vue' | 'markdown+cursor-rules'
 
 export interface CommandSelectedOptions {
   /**

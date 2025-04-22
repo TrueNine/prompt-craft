@@ -3,6 +3,7 @@ description: mandatory local dev environment (strict enforcement)
 globs:
 alwaysApply: false
 ---
+
 # env rules
 all recommendations and operations are specific to this environment, no cross - system analogies.
 editor: Cursor (vscode fork)

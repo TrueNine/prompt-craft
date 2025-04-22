@@ -1,3 +1,9 @@
+---
+description:
+globs: 
+alwaysApply: true
+---
+
 # 技术选型
 - 代码必须可在主流平台和环境中运行
 - 必须选择编译型强类型语言

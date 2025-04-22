@@ -1,8 +1,9 @@
 ---
-description: 生产部署环境配置
+description: production deploy env
 globs:
 alwaysApply: false
 ---
+
 # production deploy env
 - os: linux ubuntu 24.04
 - container: docker and ocker-compose

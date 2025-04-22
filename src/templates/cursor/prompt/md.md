@@ -1,3 +1,9 @@
+---
+description:
+globs: *.md,*.mdc
+alwaysApply: false
+---
+
 # 全局提示词：AI 协作规则（2025年4月）
 
 ## 目录

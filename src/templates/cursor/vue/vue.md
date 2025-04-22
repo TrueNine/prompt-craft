@@ -3,6 +3,7 @@ description:
 globs: *.vue
 alwaysApply: false
 ---
+
 ## 核心框架
 - Vue 3
 - Vue Router 4

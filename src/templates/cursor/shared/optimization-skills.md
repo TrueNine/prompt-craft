@@ -3,6 +3,7 @@ description: Mandatory Static Language Optimization Rules
 globs:
 alwaysApply: false
 ---
+
 ## Prefer Early Returns
 
 Use early returns to reduce nesting and improve code readability.

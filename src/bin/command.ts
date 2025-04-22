@@ -1,12 +1,12 @@
 #!/usr/bin/env node
-import type { CommandSelectedOptions } from '@/types'
+import type { CommandSelectedOptions, LanguageType } from '@/types'
 import { resolve } from 'node:path'
 
 import process from 'node:process'
 import chalk from 'chalk'
 import { Command } from 'commander'
 import inquirer from 'inquirer'
-import { cursorKtPrompts, cursorRelativeFolderPath, cursorSharedPrompts, cursorVuePrompts } from './cursorSharedPrompts'
+import { cursorKtPrompts, cursorPromptPrompts, cursorRelativeFolderPath, cursorSharedPrompts, cursorVuePrompts } from './cursorSharedPrompts'
 import { camelToKebab, cleanRulesDir, writeRuleFile } from './utils'
 
 const program = new Command()
@@ -50,25 +50,39 @@ function writeRules(options: CommandSelectedOptions, rulesDir: string = resolve(
   Object.entries(cursorSharedPrompts).forEach(([name, content]) => {
     writeRuleFile(rulesDir, camelToKebab(name), content)
   })
-
   // 根据语言类型写入特定规则
-  if (options.usedLanguages === 'kotlin+spring-boot') {
-    Object.entries(cursorKtPrompts).forEach(([name, content]) => {
-      writeRuleFile(rulesDir, camelToKebab(name), content)
-    })
-  } else if (options.usedLanguages === 'typescript+vue') {
-    Object.entries(cursorVuePrompts).forEach(([name, content]) => {
-      writeRuleFile(rulesDir, camelToKebab(name), content)
-    })
+  switch (options.usedLanguages) {
+    case 'kotlin+spring-boot': {
+      Object.entries(cursorKtPrompts).forEach(([name, content]) => {
+        writeRuleFile(rulesDir, camelToKebab(name), content)
+      })
+      break
+    }
+    case 'typescript+vue': {
+      Object.entries(cursorVuePrompts).forEach(([name, content]) => {
+        writeRuleFile(rulesDir, camelToKebab(name), content)
+      })
+      break
+    }
+    case 'markdown+cursor-rules': {
+      Object.entries(cursorPromptPrompts).forEach(([name, content]) => {
+        writeRuleFile(rulesDir, camelToKebab(name), content)
+      })
+      break
+    }
+    default: {
+      const errorMessage = `不支持的语言类型: ${String(options.usedLanguages)}`
+      throw new Error(errorMessage)
+    }
   }
+}
+
+interface LanguagePrompt {
+  usedLanguages: LanguageType
 }
 
 export async function runCli(): Promise<void> {
   try {
-    interface LanguagePrompt {
-      usedLanguages: 'typescript+vue' | 'kotlin+spring-boot'
-    }
-
     const { usedLanguages } = await inquirer.prompt<LanguagePrompt>([
       {
         type: 'list',
@@ -77,6 +91,7 @@ export async function runCli(): Promise<void> {
         choices: [
           { name: 'TypeScript + Vue', value: 'typescript+vue' as const },
           { name: 'Kotlin + Spring Boot', value: 'kotlin+spring-boot' as const },
+          { name: 'Markdown + Cursor Rules', value: 'markdown+cursor-rules' as const },
         ],
       },
     ])
@@ -87,6 +102,7 @@ export async function runCli(): Promise<void> {
 
     writeRules(options)
     console.log(chalk.green('✨ 规则文件写入成功！'))
+    process.exit(0)
   } catch (error) {
     console.error(chalk.red('❌ 执行失败：'), error)
     process.exit(1)

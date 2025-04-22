@@ -3,6 +3,7 @@ description:
 globs: *.tsx,*.vue,*.css,*.vue,*.html,*.scss
 alwaysApply: false
 ---
+
 # Vue 项目样式规范
 
 ## 核心原则与基础设定

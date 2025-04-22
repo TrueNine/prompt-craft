@@ -35,3 +35,5 @@ export const cursorVuePrompts = {
   vueVue: getContent(vueVue),
   vueFixTest: getContent(vueFixTest),
 }
+
+export const cursorRelativeFolderPath = '.cursor/rules'

@@ -1,6 +1,6 @@
 ---
-description: Git Commit 消息规范
-globs:
+description:
+globs: COMMIT_EDITMSG
 alwaysApply: false
 ---
 

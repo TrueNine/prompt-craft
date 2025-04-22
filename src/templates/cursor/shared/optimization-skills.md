@@ -1,5 +1,7 @@
 ---
-description: 强制编程守则
+description: 强制编码守则
+globs:
+alwaysApply: false
 ---
 
 ## 可选：分层解耦

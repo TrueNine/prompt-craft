@@ -54,11 +54,11 @@ function writeRules(options: CommandSelectedOptions, rulesDir: string = resolve(
   // 根据语言类型写入特定规则
   if (options.usedLanguages === 'kotlin+spring-boot') {
     Object.entries(cursorKtPrompts).forEach(([name, content]) => {
-      writeRuleFile(rulesDir, toKebabCase(name), content)
+      writeRuleFile(rulesDir, camelToKebab(name), content)
     })
   } else if (options.usedLanguages === 'typescript+vue') {
     Object.entries(cursorVuePrompts).forEach(([name, content]) => {
-      writeRuleFile(rulesDir, toKebabCase(name), content)
+      writeRuleFile(rulesDir, camelToKebab(name), content)
     })
   }
 }

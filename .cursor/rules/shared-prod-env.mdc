@@ -1,25 +1,37 @@
 ---
-description: production deploy env
+description: 生产环境
 globs:
 alwaysApply: false
 ---
 
-# production deploy env
-- os: linux ubuntu 24.04
-- container: docker and ocker-compose
-- hardware：2C4G
-- domain：yifajucai.com
-## other softwares
+# 云服务器硬件规格
+
+- 处理器: 2核
+- 内存: 4GB
+- 硬盘: 400GB
+- 带宽: 24Mbps
+
+# 系统配置
+
+- 操作系统: Linux Ubuntu 24.04
+- 容器: docker and ocker-compose
+- 域名: yifajucai.com
 - certbot
-## docker services
-- api_service: custom playwright + openjdk23
-- db: postgresql 17.4
-- cache: redis 17
-- oss: MinIO 2025.03
-- webserver: wNginx
-## docker volumns
+
+# 容器服务
+
+- API服务: 自定义 Playwright + OpenJDK 23
+- 数据库: PostgreSQL 17.4
+- 缓存: Redis 17
+- 对象存储: MinIO 2025.03
+- 反向代理: Nginx
+
+# 容器卷
+
 - root: /opt/dl
 - nginx: /opt/dl/nginx
 - nginx html dir: /opt/dl/nginx/html/dist
-## securify rules
-- export_port_rules：enabled: 21,22,80,443,9001,5432,6379 disabled: all
+
+# 安全规则
+
+- 端口出入规则: 可出入：21,22,80,443,9001,5432,6379 禁用: 其他所有

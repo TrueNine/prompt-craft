@@ -28,27 +28,40 @@ export function getContent(input: string, cwd: string = process.cwd()): string {
 }
 
 /**
- * 将驼峰命名（camelCase）转换为小写烤串命名（kebab-case）
- * 例如：myVariableName -> my-variable-name
+ * 将驼峰命名（camelCase）转换为烤串命名（kebab-case）
+ * @param str 要转换的字符串
+ * @param letterCase 输出大小写，'lower' 为小写（默认），'upper' 为大写
+ * @returns 转换后的字符串
+ * @example
+ * camelToKebab('myVariableName') // 'my-variable-name'
+ * camelToKebab('myVariableName', 'upper') // 'MY-VARIABLE-NAME'
  */
-export function camelToKebab(str: string): string {
+export function camelToKebab(str: string, letterCase: 'lower' | 'upper' = 'lower'): string {
   if (!str) {
     return ''
   }
-  // 下划线后跟大写字母，先变 _-，后续再修正
-  let result = str.replace(/_([A-Z])/g, '_-$1')
-  // 其它所有大写前加 -
+
+  // 如果字符串只包含下划线，直接返回
+  if (/^_+$/.test(str)) {
+    return str
+  }
+
+  // 先处理下划线
+  let result = str.replace(/_+/g, '-')
+
+  // 处理连续大写字母的特殊情况（如 XML、HTML 等）
+  result = result.replace(/([A-Z]+)([A-Z][a-z])/g, '$1-$2')
+
+  // 处理其他大写字母
   result = result.replace(/([a-z0-9])([A-Z])/g, '$1-$2')
-  result = result.replace(/([A-Z])([A-Z])(?=[a-z])/g, '$1-$2')
-  result = result.replace(/([^\w\-])([A-Z])/g, '$1-$2')
-  result = result.replace(/([A-Z])/g, '-$1')
-  // 合并多余的 -，去头部 -
-  result = result.replace(/-+/g, '-')
-  result = result.replace(/^-+/, '')
-  // 小写化
-  result = result.toLowerCase()
-  // _- 还原成 -_
-  return result.replace(/_-/g, '-_')
+
+  // 合并多余的连字符并去掉头部连字符
+  result = result.replace(/-+/g, '-').replace(/^-+/, '')
+
+  // 根据参数决定大小写
+  result = letterCase === 'upper' ? result.toUpperCase() : result.toLowerCase()
+
+  return result
 }
 
 /**

@@ -24,16 +24,16 @@ export const cursorSharedPrompts = {
 }
 
 export const cursorKtPrompts = {
-  ktTest: getContent(ktTest),
-  ktSpringBoot: getContent(ktSpringBoot),
+  test: getContent(ktTest),
+  springBoot: getContent(ktSpringBoot),
 }
 
 export const cursorVuePrompts = {
-  vueTs: getContent(vueTs),
-  vueTest: getContent(vueTest),
-  vueStyle: getContent(vueStyle),
-  vueVue: getContent(vueVue),
-  vueFixTest: getContent(vueFixTest),
+  ts: getContent(vueTs),
+  test: getContent(vueTest),
+  style: getContent(vueStyle),
+  vue: getContent(vueVue),
+  fixTest: getContent(vueFixTest),
 }
 
 export const cursorRelativeFolderPath = '.cursor/rules'

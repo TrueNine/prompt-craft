@@ -7,7 +7,7 @@ import chalk from 'chalk'
 import { Command } from 'commander'
 import inquirer from 'inquirer'
 import { cursorKtPrompts, cursorRelativeFolderPath, cursorSharedPrompts, cursorVuePrompts } from './cursorSharedPrompts'
-import { cleanRulesDir, writeRuleFile } from './utils'
+import { camelToKebab, cleanRulesDir, writeRuleFile } from './utils'
 
 const program = new Command()
 
@@ -38,18 +38,6 @@ program
   })
 
 /**
- * 将文件名转换为 kebab-case
- * @param name 原始文件名
- * @returns 转换后的文件名
- */
-function toKebabCase(name: string): string {
-  return name
-    .replace(/([a-z])([A-Z])/g, '$1-$2')
-    .replace(/[\s_]+/g, '-')
-    .toLowerCase()
-}
-
-/**
  * 写入规则文件
  * @param options 选项
  * @param rulesDir 规则文件目录
@@ -60,7 +48,7 @@ function writeRules(options: CommandSelectedOptions, rulesDir: string = resolve(
 
   // 写入共享规则
   Object.entries(cursorSharedPrompts).forEach(([name, content]) => {
-    writeRuleFile(rulesDir, toKebabCase(name), content)
+    writeRuleFile(rulesDir, camelToKebab(name), content)
   })
 
   // 根据语言类型写入特定规则

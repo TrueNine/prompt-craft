@@ -1,13 +1,12 @@
 import commonTest from '@/templates/cursor/common/test.common.md'
-// 获取 templates 目录下所有一级目录名
 import ktSpringBoot from '@/templates/cursor/kt/spring-boot.md'
 import ktTest from '@/templates/cursor/kt/test.md'
 import promptMd from '@/templates/cursor/prompt/md.md'
 import sharedAllRole from '@/templates/cursor/shared/all-role.md'
 import sharedAll from '@/templates/cursor/shared/all.md'
 import sharedDevEnv from '@/templates/cursor/shared/dev-env.md'
-import sharedOptimizationSkills from '@/templates/cursor/shared/optimization-skills.md'
-import sharedProductionEnv from '@/templates/cursor/shared/production-env.md'
+import sharedDevStandard from '@/templates/cursor/shared/dev-standard.md'
+import sharedProdEnv from '@/templates/cursor/shared/prod-env.md'
 import vueStyle from '@/templates/cursor/vue/style.md'
 import vueTestFix from '@/templates/cursor/vue/test-fix.md'
 import vueTest from '@/templates/cursor/vue/test.md'
@@ -20,10 +19,10 @@ export const templateDirNames = ['cursor', 'lingma', 'copilot', 'trae']
 
 export const cursorSharedPrompts = {
   sharedAll: getContent(sharedAll),
-  sharedAllRole: getContent(sharedAllRole),
-  sharedOptimizationSkills: getContent(sharedOptimizationSkills),
+  sharedDevStandard: getContent(sharedDevStandard),
   sharedDevEnv: getContent(sharedDevEnv),
-  sharedProductionEnv: getContent(sharedProductionEnv),
+  sharedProdEnv: getContent(sharedProdEnv),
+  sharedAllRole: getContent(sharedAllRole),
 }
 
 export const cursorCommonPrompts = {

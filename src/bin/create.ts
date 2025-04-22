@@ -1,10 +1,6 @@
 #!/usr/bin/env node
-import { existsSync } from 'node:fs'
-import { resolve } from 'node:path'
 import process from 'node:process'
 import { runCli } from './command'
-
-export * from './cursorSharedPrompts'
 
 console.log('\u2728 欢迎使用 Prompt Craft 项目初始化脚本！')
 
@@ -15,14 +11,5 @@ if (args.includes('--help') || args.includes('-h')) {
   process.exit(0)
 }
 
-const projectName = args[0] || 'my-prompt-craft-app'
-const targetDir = resolve(process.cwd(), projectName)
-
-if (existsSync(targetDir)) {
-  console.error(`\u274C 目录已存在: ${targetDir}`)
-  process.exit(1)
-}
-
-console.log(`\uD83D\uDCC1 即将创建项目: ${projectName}`)
-
-runCli()
+// 执行主程序
+void runCli()

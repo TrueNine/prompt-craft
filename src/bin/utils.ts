@@ -1,5 +1,5 @@
 import { Buffer } from 'node:buffer'
-import { readFileSync } from 'node:fs'
+import { mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs'
 import { resolve } from 'node:path'
 import process from 'node:process'
 
@@ -49,4 +49,38 @@ export function camelToKebab(str: string): string {
   result = result.toLowerCase()
   // _- 还原成 -_
   return result.replace(/_-/g, '-_')
+}
+
+/**
+ * 写入规则文件到指定目录
+ * @param rulesDir 规则文件目录
+ * @param fileName 文件名
+ * @param content 文件内容
+ */
+export function writeRuleFile(rulesDir: string, fileName: string, content: string): void {
+  try {
+    // 确保目录存在
+    mkdirSync(rulesDir, { recursive: true })
+
+    // 写入文件
+    const filePath = resolve(rulesDir, `${fileName}.mdc`)
+    writeFileSync(filePath, content, 'utf-8')
+  } catch (error) {
+    console.error(`写入规则文件失败: ${fileName}`, error)
+    throw error
+  }
+}
+
+/**
+ * 清理规则目录
+ * @param rulesDir 规则文件目录
+ */
+export function cleanRulesDir(rulesDir: string): void {
+  try {
+    rmSync(rulesDir, { recursive: true, force: true })
+    mkdirSync(rulesDir, { recursive: true })
+  } catch (error) {
+    console.error('清理规则目录失败', error)
+    throw error
+  }
 }

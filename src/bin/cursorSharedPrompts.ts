@@ -67,16 +67,17 @@ export const cursorKtPrompts = {
   springBoot: injectConversation(ktSpringBoot, 'springBoot'),
 }
 
-export const cursorPromptPrompts = {
-  md: injectConversation(promptMd, 'md'),
-}
-
 export const cursorVuePrompts = {
   ts: injectConversation(vueTs, 'ts'),
   test: injectConversation(vueTest, 'test'),
   style: injectConversation(vueStyle, 'style'),
   vue: injectConversation(vueVue, 'vue'),
   testFix: injectConversation(vueTestFix, 'testFix'),
+}
+
+export const cursorPromptPrompts = {
+  md: injectConversation(promptMd, 'md'),
+  ...cursorVuePrompts,
 }
 
 export const cursorRelativeFolderPath = '.cursor/rules'

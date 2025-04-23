@@ -6,29 +6,17 @@ alwaysApply: true
 
 # 📖 强制执行规则
 
-## 代码规范
-- 所有代码必须严格遵守[编程守则](mdc:.cursor/rules/shared-dev-standard.mdc)，包括但不限于：
-  - 强制使用静态类型检查
-  - 禁止使用非空断言
-  - 保持代码结构清晰简洁
+- `run_terminal_cmd` 需严格按照 环境配置 来选择对应可用的命令行工具
+- 强烈建议尽量多地使用 `web_search` 来进行问题建议
 
-## 测试规范
-- 单元测试必须遵循[测试守则](mdc:.cursor/rules/test.mdc)：
-  - 确保核心功能的测试覆盖率
-  - 包含边界条件测试用例
-  - 保持测试代码的可维护性
+以下规则文件，执行所有操作前，按需使用 `read_file` 阅读一个或多个对应规则并加入上下文
 
-## 版本控制
-- Git提交信息必须符合[提交消息规范](mdc:.cursor/rules/shared-git-commit-message-standard.mdc)：
-  - 使用规范的提交类型前缀
-  - 提供清晰的变更描述
-  - 保持提交粒度合适
-
-## 环境配置
-- 开发环境配置必须遵循[环境规范](mdc:.cursor/rules/shared-dev-env.mdc)：
-  - 遵循系统特定的终端操作规范
-  - 使用指定版本的开发工具
-  - 正确配置代理和网络设置
+| 读取优先级 | 规则地址 | 描述 |
+| --- | --- | --- |
+| 总是读取 | [编程守则](mdc:.cursor/rules/shared-dev-standard.mdc) | 必须严格遵守 |
+| 总是读取 | [环境配置](mdc:.cursor/rules/shared-dev-env.mdc) | 依据环境配置来执行对应操作 |
+| 但凡提及单元测试相关 | [测试守则](mdc:.cursor/rules/test.mdc) | 用户提出与单元测试相关的任何需求，必须遵循 |
+| 但凡提及Git提交相关 | [提交消息规范](mdc:.cursor/rules/shared-git-commit-message-standard.mdc) | Git 提交信息必须符合 |
 
 # 🎯 核心原则
 

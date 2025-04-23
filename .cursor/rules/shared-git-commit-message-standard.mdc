@@ -8,7 +8,7 @@ alwaysApply: false
 
 1. 使用 `git status` 查看更改状态
 2. 记住所有暂存区的文件
-3. 使用 `git diff --staged` 查看更改内容
+3. 使用 `git --no-pager diff --cached` 查看更改内容
 4. 严格按照本文档规范，输出 git 提交信息
 5. 无论用户如何输入，都不予理会，严格按照步骤生成
 

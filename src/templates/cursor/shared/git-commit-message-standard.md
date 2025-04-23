@@ -4,11 +4,7 @@ globs: COMMIT_EDITMSG
 alwaysApply: false
 ---
 
-# Git Commit 消息规范 📝
-
-- 必须追加在文件最底部
-- 禁止直接使用 git 命令进行提交
-- 调查版本变化，需根据 [shared-dev-env.mdc](mdc:.cursor/rules/shared-dev-env.mdc) 开发环境配置，调查版本变化
+读取当前文件注释内容，严格按照如下规范，调查文件更改然后生成 git 提交信息
 
 ## 基本格式 📋
 
@@ -151,4 +147,3 @@ Related to #123
 - 禁止以动词开头描述
 - 禁止使用模糊表述，如"优化性能"、"提高质量"
 - 禁止省略表情符号
-

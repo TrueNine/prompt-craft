@@ -1,61 +1,158 @@
 ---
-description:
+description: Vue 3 项目开发规范与最佳实践指南
 globs: *.vue
 alwaysApply: false
 ---
 
-## 核心框架
-- Vue 3
-- Vue Router 4
-- Pinia
+## 🎯 技术栈规范
+
+### 核心框架
+- Vue 3.4+ (使用 `<script setup>` 语法)
+- Vue Router 4.2+ (使用组合式 API)
+- Pinia 2.1+ (状态管理首选)
+- TypeScript 5.0+ (严格模式)
+
+### 构建工具
+- Vite 5.0+ (优先使用)
 - Unplugin 全家桶
-  - auto-import
-  - vue-components
-  - vue-router
+  - `unplugin-auto-import` (API 自动导入)
+  - `unplugin-vue-components` (组件自动导入)
+  - `unplugin-vue-router` (路由自动生成)
+  - `unplugin-icons` (图标按需加载)
 
-## 组件生态
-- PC端：Vuetify 3 (Material Design)
-- 移动端：Varlet UI (Material Design)
-- 复杂场景：Element Plus
-- 工具库：VueUse > lodash-es
+### UI 框架选型
+- PC 端：Vuetify 3 (Material Design)
+- 移动端：Varlet UI (Material You)
+- 复杂业务：Element Plus (企业级)
 
-## 命名约定
-- 组件名：PascalCase
-- 事件名：PascalCase
-- 属性名：PascalCase
+### 工具库生态
+- VueUse (组合式工具集)
+- lodash-es (工具函数，按需导入)
+- dayjs (日期处理)
+- ky (HTTP fetch 请求)
 
-## 代码约束
-- ✗ 禁用原生 DOM API
-- ✗ 禁止手动导入自动引入的函数
-- ✓ 保持组件代码简洁
-- ✓ Props 和 Emits 使用接口在组件内部单独定义
-- ✓ Emits 必须使用最新的元组定义语法
-- ✓ 组件嵌套层级应保持精简
+## 📝 编码规范
 
-## 自动导入
-- 遵循项目 vite.config.ts 的自动导入配置
-- 禁止编写多余的 import 语句
-- 优先使用自动导入的组合式 API
+### 命名约定
+- 组件名：PascalCase (如 `UserProfile`)
+- 组件属性：camelCase (如 `userName`)
+- 事件名：camelCase (如 `@updateUser`)
+- 文件名：PascalCase  (如 `UserProfile.vue`)
+- 路由名：snake_case (如 `user_settings`)
 
-## 组件模板
+### 组件结构
+- 使用 `<script setup lang="ts">` + TypeScript
+- 组件按职责单一原则拆分
+- 保持组件扁平化，避免过深嵌套
+- 遵循 Vue 3 组合式 API 风格指南
+
+### Emits 定义规范
 ```vue
 <script setup lang="ts">
+interface Emits {
+  // 无参数事件
+  close: []
+  // 单参数事件
+  update: [value: string]
+  // 多参数事件
+  submit: [data: FormData, isValid: boolean]
+}
+
+const emit = defineEmits<Emits>()
+</script>
+```
+
+## ⚡ 性能优化
+
+### 组件优化
+- 大列表使用虚拟滚动
+- 避免不必要的组件抽象
+
+### 状态管理
+- 优先使用组件级状态
+- 合理使用 `computed` 缓存
+- 避免深层响应式数据
+
+## 🚫 禁止事项
+- ✗ 禁用 `this` 语法
+- ✗ 禁用 Options API
+- ✗ 禁止直接操作 DOM
+- ✗ 禁止使用 `any` 类型
+- ✗ 禁止手动导入已配置自动导入的内容
+
+## ✅ 最佳实践
+- ✓ 使用 `<script setup>` 语法
+- ✓ 使用 TypeScript 类型标注
+- ✓ 使用组合式函数复用逻辑
+- ✓ 使用 ESLint 格式化
+- ✓ 编写单元测试用例
+
+## 📦 组件模板
+```vue
+<script setup lang="ts">
+// 类型定义
 interface Props {
-  exampleProp: string
+  title: string
+  content?: string
+  description?: string
 }
 
 interface Emits {
-  exampleEvent: [param: string]
+  submit: [data: FormData]
+  cancel: []
+  'update:description': [value?: string]
 }
 
-const { exampleProp } = defineProps<Props>()
+// Props & Emits
+const props = withDefaults(defineProps<Props>(), {
+  content: '默认内容'
+})
 const emit = defineEmits<Emits>()
+
+// 响应式状态
+const formData = ref<FormData>(new FormData())
+
+// 计算属性
+const isValid = computed(() => {
+  return formData.value.has('title')
+})
+
+// modelValue 双向绑定
+const description = useVModel(props, 'description', emit, { passive: true })
+
+// 方法
+function handleSubmit() {
+  if (isValid.value) {
+    emit('submit', formData.value)
+  }
+}
+
+// 生命周期
+onMounted(() => {
+  // ...
+})
 </script>
 
 <template>
-  <Example
-    :exampleProp="exampleProp"
-    @exampleEvent="handleExampleEvent"
-  />
+<div class="component-container">
+  <h1>{{ title }}</h1>
+  <p v-if="content">{{ content }}</p>
+  
+  <form @submit.prevent="handleSubmit">
+    <slot name="form-content" />
+    <button 
+      type="submit"
+      :disabled="!isValid"
+    >
+      提交
+    </button>
+  </form>
+</div>
 </template>
+
+<style scoped lang="scss">
+.component-container {
+  // 样式定义
+}
+</style>
 ```

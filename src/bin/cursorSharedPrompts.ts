@@ -1,4 +1,5 @@
 import commonTest from '@/templates/cursor/common/test.common.md'
+import ktKt from '@/templates/cursor/kt/kt.md'
 import ktSpringBoot from '@/templates/cursor/kt/spring-boot.md'
 import ktTest from '@/templates/cursor/kt/test.md'
 import promptMd from '@/templates/cursor/prompt/md.md'
@@ -67,6 +68,7 @@ export function injectConversation(path: string, name: string): string {
 export const cursorKtPrompts = {
   test: injectConversation(ktTest, 'test'),
   springBoot: injectConversation(ktSpringBoot, 'springBoot'),
+  kt: injectConversation(ktKt, 'kt'),
 }
 
 export const cursorVuePrompts = {

@@ -4,7 +4,7 @@ globs: COMMIT_EDITMSG
 alwaysApply: false
 ---
 
-## 操作流程
+## 操作流程 
 
 1. 用户会简要描述所有提交的大致更改意图
 2. 使用 `git --no-pager diff --cached` 查看更改内容

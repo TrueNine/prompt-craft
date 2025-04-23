@@ -4,7 +4,12 @@ globs: COMMIT_EDITMSG
 alwaysApply: false
 ---
 
-读取当前文件注释内容，严格按照如下规范，调查文件更改然后生成 git 提交信息
+## 操作流程 
+
+1. 使用 `git status` 查看更改状态
+2. 记住所有暂存区的文件
+3. 使用 `git diff --staged` 查看更改内容
+4. 严格按照本文档规范，输出 git 提交信息
 
 ## 基本格式 📋
 

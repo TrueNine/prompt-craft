@@ -4,129 +4,64 @@ globs: *.tsx,*.vue,*.css,*.vue,*.html,*.scss
 alwaysApply: false
 ---
 
-# Vue 样式规范
-
 ## 核心技术栈优先级
-
 1. UnoCSS (原子化 CSS)
-   - 必须作为主要样式解决方案
-   - 模板的 class 属性中必须只使用 UnoCSS 原子类
-   - 基础单位：1 = 0.25rem (基础字体大小 16px)
-   - 必须使用响应式前缀（sm:、md:、lg:、xl:）进行响应式设计
-
+   + 必须作为主要样式解决方案
+   + 模板的 class 属性中必须只使用 UnoCSS 原子类
+   + 基础单位：1 = 0.25rem (基础字体大小 16px)
+   + 必须使用响应式前缀（sm:、md:、lg:、xl:）进行响应式设计
 2. UI 组件库
-   - 必须与 UnoCSS 配合使用
-   - 禁止混用非 UnoCSS 工具类
-   - 组件必须支持响应式布局
-
+   + 必须与 UnoCSS 配合使用
+   + 禁止混用非 UnoCSS 工具类
+   + 组件必须支持响应式布局
 3. 作用域 SCSS
-   - 仅用于复杂的、非复用样式
-   - 必须包含 scoped 属性
-   - 必须使用媒体查询支持响应式设计
-
+   + 仅用于复杂的、非复用样式
+   + 必须包含 scoped 属性
+   + 必须使用媒体查询支持响应式设计
 ## 响应式设计规范
-
 - 断点设置（必须遵循）：
-  - sm: 640px 及以上
-  - md: 768px 及以上
-  - lg: 1024px 及以上
-  - xl: 1280px 及以上
-  - 2xl: 1536px 及以上
+  + sm: 640px 及以上
+  + md: 768px 及以上
+  + lg: 1024px 及以上
+  + xl: 1280px 及以上
+  + 2xl: 1536px 及以上
 
 - 移动优先原则：
-  - 默认样式必须针对移动端设计
-  - 使用响应式前缀扩展到更大屏幕
-  - 禁止使用固定宽度，必须使用相对单位
+  + 默认样式必须针对移动端设计
+  + 使用响应式前缀扩展到更大屏幕
+  + 禁止使用固定宽度，必须使用相对单位
 
 - 布局要求：
-  - 必须使用 flex 或 grid 进行响应式布局
-  - 容器类必须使用 container 类
-  - 间距和边距必须使用响应式前缀
-
+  + 必须使用 flex 或 grid 进行响应式布局
+  + 容器类必须使用 container 类
+  + 间距和边距必须使用响应式前缀
 ## 严格禁止事项
-
 - 禁止使用非作用域样式标签
 - 禁止使用内联样式属性
 - 禁止混用非 UnoCSS 工具类
 - 禁止使用 UI 库工具类
 - 禁止使用固定像素尺寸
 - 禁止忽略任何断点的样式适配
-
 ## 主题与动画规范
-
 ### 主题兼容性
 - 必须支持明暗两种主题
 - 必须使用 CSS 变量进行主题设置
 - 禁止使用硬编码的颜色值
 - 暗色主题变体必须使用 dark: 前缀
-
 ### 动画实现规范
 - 必须实现以下过渡动画：
-  - 页面切换动画（slide/fade）
-  - 组件挂载/卸载动画
-  - 交互反馈动画
-  - 加载状态动画
-
+  + 页面切换动画（slide/fade）
+  + 组件挂载/卸载动画
+  + 交互反馈动画
+  + 加载状态动画
 - 动画性能优化：
-  - 必须使用 CSS transform 和 opacity
-  - 动画帧率必须保持 60fps
-  - 重要交互动画持续时间：100-300ms
-  - 页面切换动画持续时间：200-500ms
-  - 必须使用 will-change 优化性能
-  - 必须考虑 prefers-reduced-motion
-
+  + 必须使用 CSS transform 和 opacity
+  + 动画帧率必须保持 60fps
+  + 重要交互动画持续时间：100-300ms
+  + 页面切换动画持续时间：200-500ms
+  + 必须使用 will-change 优化性能
+  + 必须考虑 prefers-reduced-motion
 ## 图标实现
-
 - 必须专门使用 <YIco> 组件
 - 必须使用 UnoCSS @iconify-json 预设
 - 格式：i-{collection}:{icon-name}
-- 禁止使用原始图标标签或其他图标库
-- 图标必须支持响应式尺寸
-
-## 布尔属性约定
-
-- 必须使用完整的绑定语法
-- 禁止使用简写布尔属性
-- 示例：使用 :disabled="true" 而不是 disabled
-
-## 代码示例
-
-```vue
-<template>
-<!-- 正确的响应式样式用法 -->
-<div class="
-  flex flex-col sm:flex-row 
-  items-center p-4 
-  bg-light dark:bg-dark
-  transition-all duration-300
-">
-  <YIco class="
-    i-mdi:home 
-    text-xl sm:text-2xl 
-    text-primary
-    transform hover:scale-110 transition-transform
-  " />
-  <el-button class="
-    mt-4 sm:mt-0 sm:ml-4
-    animate-fade-in
-  ">提交</el-button>
-</div>
-
-<!-- 错误的样式用法 -->
-<div style="display: flex">
-  <i class="icon-home"></i>
-  <button disabled>提交</button>
-</div>
-</template>
-```
-
-## 验证规则
-
-1. class 属性必须只包含 UnoCSS 类
-2. style 标签必须包含 scoped 属性
-3. 图标元素必须使用 YIco 组件
-4. 布尔属性必须使用完整的绑定语法
-5. 颜色值必须使用主题变量
-6. 必须包含所有断点的响应式样式
-7. 必须实现规定的动画效果
-8. 动画性能指标必须符合要求

@@ -6,3 +6,13 @@ export interface CommandSelectedOptions {
    */
   usedLanguages: LanguageType
 }
+
+export interface FileTree {
+  path: string
+  description?: string
+  type: 'file' | 'directory'
+  children?: FileTree[]
+}
+export type ProjectStructure = {
+  [key in LanguageType]: FileTree | FileTree[]
+}

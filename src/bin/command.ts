@@ -3,6 +3,7 @@ import type { CommandSelectedOptions, LanguageType } from '@/types'
 import { resolve } from 'node:path'
 
 import process from 'node:process'
+import { defaultLanguageFiles } from '@/common/defaultProjectStruct'
 import { camelToKebab, cleanRulesDir, writeRuleFile } from '@/common/utils'
 import chalk from 'chalk'
 import { Command } from 'commander'
@@ -50,24 +51,30 @@ function writeRules(options: CommandSelectedOptions, rulesDir: string = resolve(
   Object.entries(cursorSharedPrompts).forEach(([name, content]) => {
     writeRuleFile(rulesDir, camelToKebab(name), content)
   })
+
+  const structure = `---\ndescription: \nglobs: \nalwaysApply: true\n---\n${'```text\n\n'}${defaultLanguageFiles[options.usedLanguages]}${'```\n'}`
+
   // 根据语言类型写入特定规则
   switch (options.usedLanguages) {
     case 'kotlin+spring-boot': {
       Object.entries(cursorKtPrompts).forEach(([name, content]) => {
         writeRuleFile(rulesDir, camelToKebab(name), content)
       })
+      writeRuleFile(rulesDir, camelToKebab('projectStructure'), structure)
       break
     }
     case 'typescript+vue': {
       Object.entries(cursorVuePrompts).forEach(([name, content]) => {
         writeRuleFile(rulesDir, camelToKebab(name), content)
       })
+      writeRuleFile(rulesDir, camelToKebab('projectStructure'), structure)
       break
     }
     case 'markdown+cursor-rules': {
       Object.entries(cursorPromptPrompts).forEach(([name, content]) => {
         writeRuleFile(rulesDir, camelToKebab(name), content)
       })
+      writeRuleFile(rulesDir, camelToKebab('projectStructure'), structure)
       break
     }
     default: {

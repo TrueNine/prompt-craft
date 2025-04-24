@@ -3,11 +3,11 @@ import type { CommandSelectedOptions, LanguageType } from '@/types'
 import { resolve } from 'node:path'
 
 import process from 'node:process'
+import { camelToKebab, cleanRulesDir, writeRuleFile } from '@/common/utils'
 import chalk from 'chalk'
 import { Command } from 'commander'
 import inquirer from 'inquirer'
 import { cursorKtPrompts, cursorPromptPrompts, cursorRelativeFolderPath, cursorSharedPrompts, cursorVuePrompts } from './cursorSharedPrompts'
-import { camelToKebab, cleanRulesDir, writeRuleFile } from './utils'
 
 const program = new Command()
 

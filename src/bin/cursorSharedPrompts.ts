@@ -1,3 +1,4 @@
+import { getContent } from '@/common/utils'
 import commonTest from '@/templates/cursor/common/test.common.md'
 import ktKt from '@/templates/cursor/kt/kt.md'
 import ktSpringBoot from '@/templates/cursor/kt/spring-boot.md'
@@ -12,9 +13,8 @@ import vueStyle from '@/templates/cursor/vue/style.md'
 import vueTestFix from '@/templates/cursor/vue/test-fix.md'
 import vueTest from '@/templates/cursor/vue/test.md'
 import vueTs from '@/templates/cursor/vue/ts.md'
-import vueVue from '@/templates/cursor/vue/vue.md'
 
-import { getContent } from './utils'
+import vueVue from '@/templates/cursor/vue/vue.md'
 
 export const templateDirNames = ['cursor', 'lingma', 'copilot', 'trae']
 

@@ -1,13 +1,13 @@
 import type { Mock } from 'vitest'
+import { getContent } from '@/common/utils'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
+
 // 导入被测试的模块
 import { cursorKtPrompts, cursorSharedPrompts, cursorVuePrompts, injectConversation, templateDirNames } from '../cursorSharedPrompts'
-
-import { getContent } from '../utils'
 // 类型安全地扩展 globalThis
 
 // 由于 vi.mock 会被提升，我们需要在导入之前进行 mock
-vi.mock('../utils', () => ({
+vi.mock('@/common/utils', () => ({
   getContent: vi.fn((file: unknown) => {
     if (typeof file === 'string')
       return `mock-content-${file}`

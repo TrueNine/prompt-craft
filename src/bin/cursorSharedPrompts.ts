@@ -3,7 +3,6 @@ import ktKt from '@/templates/cursor/kt/kt.md'
 import ktSpringBoot from '@/templates/cursor/kt/spring-boot.md'
 import ktTest from '@/templates/cursor/kt/test.md'
 import promptMd from '@/templates/cursor/prompt/md.md'
-import sharedAllRole from '@/templates/cursor/shared/all-role.md'
 import sharedAll from '@/templates/cursor/shared/all.md'
 import sharedDevEnv from '@/templates/cursor/shared/dev-env.md'
 import sharedDevStandard from '@/templates/cursor/shared/dev-standard.md'
@@ -24,7 +23,6 @@ export const cursorSharedPrompts = {
   sharedDevStandard: getContent(sharedDevStandard),
   sharedDevEnv: getContent(sharedDevEnv),
   sharedProdEnv: getContent(sharedProdEnv),
-  sharedAllRole: getContent(sharedAllRole),
   sharedGitCommitMessageStandard: getContent(sharedGitCommitMessageStandard),
 }
 

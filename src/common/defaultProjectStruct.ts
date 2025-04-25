@@ -184,7 +184,7 @@ export const defaultProjectStructure: ProjectStructure = {
     {
       path: '**/src/[main|test]/dto/**.dto',
       type: 'file',
-      description: 'jimmer DTO 文件',
+      description: 'jimmer DTO 文件（自动生成到 build/generated/ksp/ 下）',
     },
   ],
   'typescript+vue': [

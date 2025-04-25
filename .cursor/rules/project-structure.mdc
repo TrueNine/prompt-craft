@@ -1,9 +1,10 @@
 ---
-description:
-globs:
+description: 
+globs: 
 alwaysApply: true
 ---
 ```text
+
 docs/ #临时文档目录
 src/
 └─bin/ #CLI 命令行工具

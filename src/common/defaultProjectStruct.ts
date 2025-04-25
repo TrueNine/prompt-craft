@@ -95,6 +95,54 @@ export const genericKotlinProjectFileTrees: FileTree[] = [
     description: 'buildSrc 目录',
   },
   {
+    path: '**/build/',
+    type: 'directory',
+    description: '构建输出目录',
+    children: [
+      {
+        path: 'generated',
+        type: 'directory',
+        description: '重要 kotlin 项目生成目录',
+        children: [
+          {
+            path: 'ksp',
+            type: 'directory',
+            description: 'kotlin 注解处理器生成目录',
+            children: [
+              {
+                path: 'main',
+                type: 'directory',
+                description: '与 src/main 一致（此目录应被AI索引）',
+              },
+              {
+                path: 'test',
+                type: 'directory',
+                description: '与 src/test 一致（此目录应被AI索引）',
+              },
+            ],
+          },
+          {
+            path: 'source',
+            type: 'directory',
+            description: 'kotlin kapt 生成的目录',
+            children: [
+              {
+                path: 'kapt',
+                type: 'directory',
+                description: '与 src/ 结构一致',
+              },
+              {
+                path: 'kaptKotlin',
+                type: 'directory',
+                description: '与 src/ 结构一致',
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  },
+  {
     path: '**/src/',
     type: 'directory',
     description: '源代码目录',

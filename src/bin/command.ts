@@ -1,7 +1,8 @@
 #!/usr/bin/env node
 import type { CommandSelectedOptions, LanguageType } from '@/types'
-import { resolve } from 'node:path'
+import { writeFileSync } from 'node:fs'
 
+import { resolve } from 'node:path'
 import process from 'node:process'
 import { defaultLanguageFiles } from '@/common/defaultProjectStruct'
 import { camelToKebab, cleanRulesDir, writeRuleFile } from '@/common/utils'
@@ -52,7 +53,12 @@ function writeRules(options: CommandSelectedOptions, rulesDir: string = resolve(
     writeRuleFile(rulesDir, camelToKebab(name), content)
   })
 
-  const structure = `---\ndescription: \nglobs: \nalwaysApply: true\n---\n${'```text\n\n'}${defaultLanguageFiles[options.usedLanguages]}${'```\n'}`
+  const structureDesc = [
+    '# 项目结构',
+    '应尽量遵循此项目结构，尽力复用代码',
+    '\n',
+  ].join('\n')
+  const structure = `---\ndescription: \nglobs: \nalwaysApply: true\n---\n\n${structureDesc}${'```text\n\n'}${defaultLanguageFiles[options.usedLanguages]}${'```\n'}`
 
   // 根据语言类型写入特定规则
   switch (options.usedLanguages) {
@@ -88,6 +94,24 @@ interface LanguagePrompt {
   usedLanguages: LanguageType
 }
 
+const cursorIgnoresFileContent = [
+  '!build/generated/ksp',
+].join('\n')
+
+/**
+ * 写入 .cursorignore 文件
+ * @param content 文件内容
+ * @param filePath 文件路径
+ */
+function writeCursorIgnoreFile(content: string, filePath: string = resolve(process.cwd(), '.cursorignore')): void {
+  try {
+    writeFileSync(filePath, content)
+    console.log(chalk.green('✨ .cursorignore 文件写入成功！'))
+  } catch (error) {
+    console.error(chalk.red('❌ .cursorignore 文件写入失败：'), error)
+  }
+}
+
 export async function runCli(): Promise<void> {
   try {
     const { usedLanguages } = await inquirer.prompt<LanguagePrompt>([
@@ -108,6 +132,7 @@ export async function runCli(): Promise<void> {
     }
 
     writeRules(options)
+    writeCursorIgnoreFile(cursorIgnoresFileContent)
     console.log(chalk.green('✨ 规则文件写入成功！'))
     process.exit(0)
   } catch (error) {

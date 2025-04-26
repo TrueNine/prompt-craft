@@ -1,66 +1,21 @@
 ---
 description: Kotlin 测试规范与最佳实践指南
-globs: *Test.kt,*Test.java
+globs: *Test.kt
 alwaysApply: false
 ---
 
+# Kotlin 测试技术栈
 - 测试框架：JUnit 5 + kotlin.test
 - Mock 框架：MockK（首选）/ Mockito（Java 互操作时）
 - 参数化测试：JUnit 5 Params
-- 集成测试：Testcontainers
+- 集成测试：testcontainers
 - Spring 测试：spring-boot-starter-test
-# 总则
-- 命名规范、测试组织等严格按照此规范进行
-- 与被测对象名称不符，立即立即修改
-- 没有进行分组的测试，立即立即分组
-- 功能类似或重复的测试，立即按需合并
-- 多余的旧测试必须删除
-- 尽可能多使用参数化测试来减少重复代码
-# 测试类分组规范
-- 一个类测试一个对象
-- 使用 `@Nested` 嵌套单个同名的被测试方法、类、变量等
 
-# 命名规范
-## 测试类命名
-- 单元测试 `[类名]Test`
-- 分组类名 `[被测试方法名|变量名][Function|Variable|Class]Group`
-## 测试方法命名
-- 正向测试：`正常 [条件] 时，[预期结果]`
-- 异常测试：`异常 [条件] 时，抛出 [异常类型]`
-- 边界测试：`边界 [条件] 时，[预期结果]`
-- 性能测试：`预期 [功能] 达到 [指标]`
-
-# 测试覆盖率要求
-- 代码覆盖率 > 100%
-- 边界条件覆盖率 > 100%
-- 异常分支覆盖率 > 100%
-- 性能测试按需编写，确保核心业务场景覆盖即可
+# Kotlin特定命名规范
+- 单元测试类命名：`[类名]Test`
+- 分组类名：`[被测试方法名|变量名][Function|Variable|Class]Group`
 
 # Kotlin 测试编写规范
-## 基本原则
 1. 充分利用 Kotlin 特性，减少样板代码，提升代码可读性
 2. 一个测试方法只验证一个行为
 3. 禁止测试间的依赖
-4. 测试结构组织：
-```kotlin
-class UserServiceTest {
-  private lateinit var userService: UserService
-  private val mockRepo = mockk<UserRepository>()
-
-  @BeforeEach
-  fun setup() {
-    userService = UserService(mockRepo)
-  }
-
-  @Nested
-  inner class CreateUser {
-    @Test
-    fun `当输入有效时，创建用户`() {
-      val input = UserInput("test@email.com")
-      val result = userService.createUser(input)
-      assertNotNull(result)
-      assertEquals("test@email.com", result.email)
-    }
-  }
-}
-```

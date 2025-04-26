@@ -345,4 +345,127 @@ project2/ #项目2
 └─index.ts\n`
     expect(generateFileTreeText(fileTree)).toBe(expected)
   })
+
+  // 测试合并重复定义
+  it('generateFileTreeText 输入含有重复路径的文件树数组 返回正确合并后的文本', () => {
+    const fileTrees: FileTree[] = [
+      {
+        path: 'file1.txt',
+        type: 'file',
+      },
+      {
+        path: 'file1.txt', // 重复路径
+        type: 'file',
+        description: '文件1', // 有描述优先
+      },
+      {
+        path: 'dir1',
+        type: 'directory',
+        description: '短描述',
+        children: [],
+      },
+      {
+        path: 'dir1', // 重复路径
+        type: 'directory',
+        description: '较长的目录描述', // 长描述优先
+        children: [],
+      },
+    ]
+    const expected = `dir1/ #较长的目录描述
+file1.txt #文件1\n`
+    expect(generateFileTreeText(fileTrees)).toBe(expected)
+  })
+
+  it('generateFileTreeText 合并有相同子节点的目录 正确处理子节点合并', () => {
+    const fileTrees: FileTree[] = [
+      {
+        path: 'src',
+        type: 'directory',
+        children: [
+          {
+            path: 'index.ts',
+            type: 'file',
+          },
+        ],
+      },
+      {
+        path: 'src', // 重复目录
+        type: 'directory',
+        description: '源码目录',
+        children: [
+          {
+            path: 'index.ts', // 重复文件
+            type: 'file',
+            description: '入口文件',
+          },
+          {
+            path: 'utils.ts', // 新增文件
+            type: 'file',
+            description: '工具函数',
+          },
+        ],
+      },
+    ]
+    const expected = `src/ #源码目录
+└─index.ts #入口文件
+└─utils.ts #工具函数\n`
+    expect(generateFileTreeText(fileTrees)).toBe(expected)
+  })
+
+  it('generateFileTreeText 合并多层嵌套的重复结构 返回正确的合并树', () => {
+    const fileTrees: FileTree[] = [
+      {
+        path: 'root',
+        type: 'directory',
+        children: [
+          {
+            path: 'dir1',
+            type: 'directory',
+            children: [
+              {
+                path: 'file1.txt',
+                type: 'file',
+              },
+            ],
+          },
+        ],
+      },
+      {
+        path: 'root',
+        type: 'directory',
+        description: '根目录',
+        children: [
+          {
+            path: 'dir1',
+            type: 'directory',
+            description: '目录1',
+            children: [
+              {
+                path: 'file1.txt',
+                type: 'file',
+                description: '文件1',
+              },
+              {
+                path: 'file2.txt',
+                type: 'file',
+                description: '文件2',
+              },
+            ],
+          },
+          {
+            path: 'dir2',
+            type: 'directory',
+            description: '目录2',
+            children: [],
+          },
+        ],
+      },
+    ]
+    const expected = `root/ #根目录
+└─dir1/ #目录1
+│└─file1.txt #文件1
+│└─file2.txt #文件2
+└─dir2/ #目录2\n`
+    expect(generateFileTreeText(fileTrees)).toBe(expected)
+  })
 })

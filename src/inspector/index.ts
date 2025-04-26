@@ -34,6 +34,49 @@ function sortFileTreeNodes(a: FileTree, b: FileTree, parentHasAsterisk = false):
 }
 
 /**
+ * 合并重复的文件树节点
+ * @param fileTrees 文件树数组
+ * @returns 合并后的文件树数组
+ */
+function mergeFileTrees(fileTrees: FileTree[]): FileTree[] {
+  if (!fileTrees.length)
+    return []
+
+  const pathMap = new Map<string, FileTree>()
+
+  // 首先按路径将节点分组
+  fileTrees.forEach((tree) => {
+    const key = `${tree.path}:${tree.type}`
+    const existingTree = pathMap.get(key)
+
+    if (!existingTree) {
+      // 首次遇到的节点直接存储
+      pathMap.set(key, { ...tree })
+    } else {
+      // 合并节点(优先保留有描述的，描述长的优先)
+      const existingDesc = typeof existingTree.description === 'string' ? existingTree.description : ''
+      const newDesc = typeof tree.description === 'string' ? tree.description : ''
+
+      // 有描述 > 无描述，长描述 > 短描述
+      if (newDesc.length > 0 && (existingDesc.length === 0 || newDesc.length > existingDesc.length)) {
+        existingTree.description = newDesc
+      }
+
+      // 合并子节点（如果存在）
+      if (tree.type === 'directory' && tree.children && tree.children.length > 0) {
+        if (!existingTree.children) {
+          existingTree.children = []
+        }
+        // 递归合并子节点
+        existingTree.children = mergeFileTrees([...existingTree.children, ...tree.children])
+      }
+    }
+  })
+
+  return Array.from(pathMap.values())
+}
+
+/**
  * 生成一个或多个文件树的文本描述
  * @param fileTrees 单个文件树或文件树数组
  * @param level 当前层级
@@ -46,7 +89,10 @@ export function generateFileTreeText(
 ): string {
   // 处理数组输入
   if (Array.isArray(fileTrees)) {
-    const sortedTrees = [...fileTrees].sort((a, b) => sortFileTreeNodes(a, b))
+    // 先合并重复的节点
+    const mergedTrees = mergeFileTrees(fileTrees)
+    // 再进行排序
+    const sortedTrees = [...mergedTrees].sort((a, b) => sortFileTreeNodes(a, b))
     return sortedTrees.map((tree) => generateFileTreeText(tree, level, prefix)).join('')
   }
 
@@ -70,7 +116,9 @@ export function generateFileTreeText(
   // 处理子节点（先排序）
   if (fileTree.type === 'directory' && Array.isArray(fileTree.children) && fileTree.children.length > 0) {
     const hasAsterisk = fileTree.path.includes('*')
-    const sortedChildren = [...fileTree.children].sort((a, b) => sortFileTreeNodes(a, b, hasAsterisk))
+    // 合并重复子节点后再排序
+    const mergedChildren = mergeFileTrees(fileTree.children)
+    const sortedChildren = [...mergedChildren].sort((a, b) => sortFileTreeNodes(a, b, hasAsterisk))
     sortedChildren.forEach((child) => {
       const newPrefix = prefix + (level === 0 ? '' : '│') + (level > 0 ? '' : '')
       result += generateFileTreeText(child, level + 1, newPrefix)

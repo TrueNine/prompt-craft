@@ -1,14 +1,16 @@
 import { getContent } from '@/common/utils'
+import commonTestFix from '@/templates/cursor/common/test-fix.common.md'
 import commonTest from '@/templates/cursor/common/test.common.md'
+import instructionCommit from '@/templates/cursor/Instruction/commit.md'
+import instructionRefactor from '@/templates/cursor/Instruction/refactor.md'
 import ktKt from '@/templates/cursor/kt/kt.md'
 import ktSpringBoot from '@/templates/cursor/kt/spring-boot.md'
+import ktTestFix from '@/templates/cursor/kt/test-fix.md'
 import ktTest from '@/templates/cursor/kt/test.md'
 import promptMd from '@/templates/cursor/prompt/md.md'
 import sharedAll from '@/templates/cursor/shared/all.md'
 import sharedDevEnv from '@/templates/cursor/shared/dev-env.md'
 import sharedDevStandard from '@/templates/cursor/shared/dev-standard.md'
-import sharedGitCommitMessageStandard from '@/templates/cursor/shared/git-commit-message-standard.md'
-import sharedProdEnv from '@/templates/cursor/shared/prod-env.md'
 import vueStyle from '@/templates/cursor/vue/style.md'
 import vueTestFix from '@/templates/cursor/vue/test-fix.md'
 import vueTest from '@/templates/cursor/vue/test.md'
@@ -19,15 +21,18 @@ import vueVue from '@/templates/cursor/vue/vue.md'
 export const templateDirNames = ['cursor', 'lingma', 'copilot', 'trae']
 
 export const cursorSharedPrompts = {
+  // AI 指令
+  commit: getContent(instructionCommit),
+  refactor: getContent(instructionRefactor),
+  // 共享规则
   sharedAll: getContent(sharedAll),
   sharedDevStandard: getContent(sharedDevStandard),
   sharedDevEnv: getContent(sharedDevEnv),
-  sharedProdEnv: getContent(sharedProdEnv),
-  sharedGitCommitMessageStandard: getContent(sharedGitCommitMessageStandard),
 }
 
 export const cursorCommonPrompts = {
   test: getContent(commonTest),
+  testFix: getContent(commonTestFix),
 }
 
 /**
@@ -67,6 +72,7 @@ export const cursorKtPrompts = {
   test: injectConversation(ktTest, 'test'),
   springBoot: injectConversation(ktSpringBoot, 'springBoot'),
   kt: injectConversation(ktKt, 'kt'),
+  testFix: injectConversation(ktTestFix, 'testFix'),
 }
 
 export const cursorVuePrompts = {

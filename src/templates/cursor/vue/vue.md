@@ -4,81 +4,42 @@ globs: *.vue
 alwaysApply: false
 ---
 
-## 🎯 技术栈规范
+## 技术栈
+- Vue 3.4+：使用`<script setup>`语法
+- Vue Router 4.2+：组合式API
+- Pinia 2.1+：首选状态管理
+- TypeScript 5.0+：严格模式
+- Vite 5.0+：首选构建工具
+- Unplugin系列：自动导入API/组件/路由/图标
 
-### 核心框架
-- Vue 3.4+ (使用 `<script setup>` 语法)
-- Vue Router 4.2+ (使用组合式 API)
-- Pinia 2.1+ (状态管理首选)
-- TypeScript 5.0+ (严格模式)
+## 组件规范
+- 命名：组件用PascalCase，属性用camelCase，事件用camelCase
+- 文件：组件文件用PascalCase，路由用snake_case
+- 结构：单一职责，扁平化，组合式API
+- Props定义：使用TypeScript接口，设置默认值
+- Emits定义：使用TypeScript接口，明确参数类型
 
-### 构建工具
-- Vite 5.0+ (优先使用)
-- Unplugin 全家桶
-   - `unplugin-auto-import` (API 自动导入)
-   - `unplugin-vue-components` (组件自动导入)
-   - `unplugin-vue-router` (路由自动生成)
-   - `unplugin-icons` (图标按需加载)
-
-### UI 框架选型
-- PC 端：Vuetify 3 (Material Design)
-- 移动端：Varlet UI (Material You)
-- 复杂业务：Element Plus (企业级)
-
-### 工具库生态
-- VueUse (组合式工具集)
-- lodash-es (工具函数，按需导入)
-- dayjs (日期处理)
-- ky (HTTP fetch 请求)
-
-## 编码规范
-
-### 命名约定
-- 组件名：PascalCase (如 `UserProfile`)
-- 组件属性：camelCase (如 `userName`)
-- 事件名：camelCase (如 `@updateUser`)
-- 文件名：PascalCase  (如 `UserProfile.vue`)
-- 路由名：snake_case (如 `user_settings`)
-
-### 组件结构
-- 使用 `<script setup lang="ts">` + TypeScript
-- 组件按职责单一原则拆分
-- 保持组件扁平化，避免过深嵌套
-- 遵循 Vue 3 组合式 API 风格指南
-
-### Emits 定义规范
-```vue
-<script setup lang="ts">
+```ts
+// Emits示例
 interface Emits {
-  // 无参数事件
-  close: []
-  // 单参数事件
-  update: [value: string]
-  // 多参数事件
-  submit: [data: FormData, isValid: boolean]
+  close: []                              // 无参数
+  update: [value: string]                // 单参数
+  submit: [data: FormData, valid: boolean] // 多参数
 }
-
 const emit = defineEmits<Emits>()
-</script>
 ```
 
 ## 性能优化
-
-### 组件优化
 - 大列表使用虚拟滚动
-- 避免不必要的组件抽象
-
-### 状态管理
-- 优先使用组件级状态
-- 合理使用 `computed` 缓存
+- 优先组件级状态，合理使用computed缓存
 - 避免深层响应式数据
 
 ## 禁止事项
-- 禁用 `this` 语法
-- 禁用 Options API
-- 禁止直接操作 DOM
-- 禁止使用 `any` 类型
-- 禁止手动导入已配置自动导入的内容
+- 使用this语法
+- 使用Options API
+- 直接操作DOM
+- 使用any类型
+- 手动导入已配置自动导入的内容
 
 ## 组件模板
 ```vue
@@ -87,65 +48,34 @@ const emit = defineEmits<Emits>()
 interface Props {
   title: string
   content?: string
-  description?: string
 }
 
-interface Emits {
-  submit: [data: FormData]
-  cancel: []
-  'update:description': [value?: string]
-}
-
-// Props & Emits
+// Props和Emits
 const props = withDefaults(defineProps<Props>(), {
-  content: '默认内容'
+  content: '默认值'
 })
-const emit = defineEmits<Emits>()
+const emit = defineEmits<{
+  submit: [data: FormData]
+}>()
 
-// 响应式状态
-const formData = ref<FormData>(new FormData())
-
-// 计算属性
-const isValid = computed(() => {
-  return formData.value.has('title')
-})
-
-// modelValue 双向绑定
-const description = useVModel(props, 'description', emit, { passive: true })
+// 状态和计算属性
+const form = ref(new FormData())
+const isValid = computed(() => form.value.has('title'))
 
 // 方法
 function handleSubmit() {
-  if (isValid.value) {
-    emit('submit', formData.value)
-  }
+  if (isValid.value) emit('submit', form.value)
 }
-
-// 生命周期
-onMounted(() => {
-  // ...
-})
 </script>
 
 <template>
-<div class="component-container">
+<div>
   <h1>{{ title }}</h1>
   <p v-if="content">{{ content }}</p>
-  
   <form @submit.prevent="handleSubmit">
-    <slot name="form-content" />
-    <button 
-      type="submit"
-      :disabled="!isValid"
-    >
-      提交
-    </button>
+    <slot />
+    <button type="submit" :disabled="!isValid">提交</button>
   </form>
 </div>
 </template>
-
-<style scoped lang="scss">
-.component-container {
-  // 样式定义
-}
-</style>
 ```

@@ -3,6 +3,7 @@ description: Cursor规则编写指南：优化AI编码协助
 globs: *.md,*.mdc
 alwaysApply: false
 ---
+
 # Cursor规则编写指南
 
 ## 专业定位

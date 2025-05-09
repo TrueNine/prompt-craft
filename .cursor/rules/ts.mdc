@@ -1,25 +1,25 @@
 ---
-description:
+description: TypeScript规范
 globs: *.ts,*.tsx,*.vue
 alwaysApply: false
 ---
 
 ## 核心规范
-- 禁止使用 `any` 类型（需显式类型声明）
-- 禁止三层以上条件/循环嵌套（需重构为函数）
-- 禁止非空断言
-- `undefined` 应使用 `void 0` 替代
+- 禁用`any`类型，必须显式声明类型
+- 避免三层以上嵌套，重构为函数
+- 使用`void 0`替代`undefined`
+- 禁用非空断言
 
 ## 性能准则
-- 避免在循环内创建函数/对象
-- 优先 `forEach` 而非 `for...of`
-- 禁止在热路径中使用 `try...catch`
+- 循环内禁止创建函数/对象
+- 用`forEach`替代`for...of`
+- 热路径禁用`try...catch`
 
 ## 最佳实践
-- 优先可选链 (`?.`) 而非 `&&` 链
-- 优先空值合并 (`??`) 而非 `||` 判断
+- 用可选链`?.`替代`&&`链
+- 用空值合并`??`替代`||`判断
 
 ## 模块规范
-- 禁止使用 `commonjs` 模块
-- 禁止使用 `require` 语句
-- 禁止使用 `import * as` 语法
+- 使用ES模块，禁用CommonJS
+- 禁用`require`语句
+- 禁用`import * as`导入

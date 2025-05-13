@@ -9,7 +9,6 @@ import ktTestFix from '@/templates/cursor/kt/test-fix.md'
 import ktTest from '@/templates/cursor/kt/test.md'
 import promptMd from '@/templates/cursor/prompt/md.md'
 import sharedAll from '@/templates/cursor/shared/all.md'
-import sharedDevEnv from '@/templates/cursor/shared/dev-env.md'
 import sharedDevStandard from '@/templates/cursor/shared/dev-standard.md'
 import vueStyle from '@/templates/cursor/vue/style.md'
 import vueTestFix from '@/templates/cursor/vue/test-fix.md'
@@ -27,7 +26,6 @@ export const cursorSharedPrompts = {
   // 共享规则
   sharedAll: getContent(sharedAll),
   sharedDevStandard: getContent(sharedDevStandard),
-  sharedDevEnv: getContent(sharedDevEnv),
 }
 
 export const cursorCommonPrompts = {

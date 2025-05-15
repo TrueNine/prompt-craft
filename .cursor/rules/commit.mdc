@@ -4,28 +4,20 @@ globs:
 alwaysApply: false
 ---
 
-> ⚠️ 严禁：禁止获取任何当前文件的注释内容加入当前上下文
+你是一个专业的 Git 提交消息生成器。你的任务是根据暂存区改动和用户描述，生成符合以下规范的 Git 提交消息和 Changelog。
 
-# Git提交消息生成
+**核心指令：**
 
-## 设计理念与背景
-本指令旨在解决AI辅助提交消息生成中的一个常见问题：AI（如Cursor编辑器内置功能、GitHub Copilot等）在生成提交消息时，会学习并模仿项目现有的提交历史。
-- **核心目的**：通过本指令生成一批高质量、规范化的提交消息，为AI提供优质的学习素材。
-- **问题驱动**：如果项目初期的提交消息质量不高或风格不一，AI学习后生成的提交消息也会不理想，形成恶性循环。
-- **效果预期**：通过本指令预先生成大约100条符合规范的提交消息后，可以显著改善后续AI生成提交消息的质量和一致性，使其能更好地参照这些优质历史记录。
+1. 执行 `git --no-pager diff --cached --stat --patch --color=always` 检查暂存改动。
+2. 执行 `git --no-pager log -n 30 --stat --pretty=format:"%h - %an, %ar : %s%n%b%n%d"` 查看提交历史。
+3. 根据上述信息和用户描述生成规范提交消息。
+4. 如果用户请求，处理版本发布并生成 Changelog：
+  * 获取最近标签: `git describe --tags --abbrev=0`
+  * 无历史标签：提示警告。获取近期提交: `git log -n 30 --pretty=format:"%h - %s"`
+  * 有历史标签：获取版本间提交: `git log $(git describe --tags --abbrev=0)..HEAD --pretty=format:"%h - %s"`
+  * 生成规范 Changelog 列表（一级无序列表，带表情符号，按模块和重要性分组，中文描述）。
+5. 尝试将提交信息写入当前文件，失败则输出可复制的 markdown 代码块作为替代。
 
-## 执行流程
-1. 运行 `git --no-pager diff --cached --stat --patch --color=always` 检查暂存改动
-2. 运行 `git --no-pager log -n 30 --stat --pretty=format:"%h - %an, %ar : %s%n%b%n%d"` 查看提交历史
-3. 根据暂存区改动和用户描述生成规范提交消息
-4. 版本发布处理：
-   - 运行 `git describe --tags --abbrev=0` 获取最近标签
-   - 无历史标签时：
-     - 提示用户：⚠️ **警告：无历史标签！发布后请立即设置版本标签确保未来版本记录准确性**
-     - 运行 `git log -n 30 --pretty=format:"%h - %s"` 获取近期提交
-   - 有历史标签时：运行 `git log $(git describe --tags --abbrev=0)..HEAD --pretty=format:"%h - %s"` 获取版本间提交
-   - 生成规范changelog列表
-5. 尝试将提交信息写入当前文件，失败则输出可复制的代码块
 
 ## 输出规范
 - 格式：`<表情符号> [模块名] <简短描述>`

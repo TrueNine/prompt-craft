@@ -29,8 +29,6 @@
     "create-@compose-prompt": "dist/prompt-craft.cjs"
   },
   "scripts": {
-    "pub-c": "pnpm publish",
-    "pub": "run-s build pub-c",
     "build:unbuild": "unbuild",
     "build": "run-s type-check lint test build:unbuild",
     "type-check": "vue-tsc --noEmit",

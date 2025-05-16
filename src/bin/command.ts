@@ -4,10 +4,10 @@ import { writeFileSync } from 'node:fs'
 
 import { resolve } from 'node:path'
 import process from 'node:process'
-import { camelToKebab, cleanRulesDir, writeRuleFile } from '@/common/utils'
 import chalk from 'chalk'
 import { Command } from 'commander'
 import inquirer from 'inquirer'
+import { camelToKebab, cleanRulesDir, writeRuleFile } from '@/common/utils'
 import { cursorKtPrompts, cursorPromptPrompts, cursorRelativeFolderPath, cursorSharedPrompts, cursorVuePrompts } from './cursorSharedPrompts'
 
 const program = new Command()

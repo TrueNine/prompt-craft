@@ -1,6 +1,6 @@
 import type { Mock } from 'vitest'
-import { getContent } from '@/common/utils'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
+import { getContent } from '@/common/utils'
 
 // 导入被测试的模块
 import { cursorKtPrompts, cursorSharedPrompts, cursorVuePrompts, injectConversation, templateDirNames } from '../cursorSharedPrompts'

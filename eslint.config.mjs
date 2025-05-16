@@ -1,6 +1,7 @@
 import eslint9 from '@compose/eslint9-config'
 
 export default eslint9({
+  type: 'app',
   ignores: [
     '**/*.md',
   ],

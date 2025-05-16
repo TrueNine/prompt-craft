@@ -59,7 +59,7 @@ function hasValidHeaderStructure(content: string): boolean {
   )
 }
 
-describe('Cursor Template Markdown Files', () => {
+describe('cursor Template Markdown Files', () => {
   const excludeDirs = ['common', '__tests__']
   const excludeFiles = ['README.md']
   const mdFiles = getAllMarkdownFiles(CURSOR_DIR, excludeDirs, excludeFiles)

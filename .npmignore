@@ -1,6 +1,14 @@
-# 忽略所有文件
-*
-# 但保留 README.md、package.json 和 dist 目录
-!README.md
-!package.json
-!dist/
+node_modules/
+src/
+docs/
+DS_Store
+.gitattributes
+.gitignore
+.editorconfig
+.idea
+.vscode
+.cursor
+.cursorignore
+*.config.*
+pnpm-*
+tsconfig.*

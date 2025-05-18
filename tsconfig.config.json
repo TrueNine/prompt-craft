@@ -15,8 +15,7 @@
     "vite.config.*",
     "vitest.config.*",
     "uno.config.*",
-    "cypress.config.*",
-    "nightwatch.conf.*",
+    "vitest.workspace.*",
     "playwright.config.*",
     "eslint.config.*",
     "build.config.*"

@@ -1,23 +1,46 @@
 ---
-description: Vue样式规范
-globs: *.tsx,*.vue,*.css,*.vue,*.html,*.scss
+description: Vue 样式规范
+globs: *.tsx,*.vue,*.css,*.html,*.scss
 alwaysApply: false
 ---
 
-## 样式核心规则
-- 使用UnoCSS作为唯一原子CSS方案，禁用其他UI库class
-- 采用SCSS编写复杂样式，利用嵌套/变量/混合减少冗余
-- 实现响应式设计，使用前缀(sm/md/lg/xl)，移动优先
-- 采用flex/grid布局，禁止固定像素值
-- 支持明暗主题，使用变量而非硬编码颜色
+样式核心规范：
 
-## 严禁项
-- 内联样式
-- 非scoped样式
-- 忽略响应式适配
-- 普通CSS编写复杂样式
+1. **原子化 CSS 方案**  
+   - 仅允许使用 UnoCSS 作为原子 CSS 工具，禁止引入其他 UI 库的 class。
+2. **复杂样式编写**  
+   - 复杂样式必须使用 SCSS，充分利用嵌套、变量、mixin 等特性，减少样式冗余与重复。
+3. **响应式设计**  
+   - 必须实现移动优先的响应式布局，统一使用 sm/md/lg/xl 等前缀，确保各断点下体验一致。
+4. **布局规范**  
+   - 统一采用 flex 或 grid 实现布局，严禁使用固定像素值（px）进行尺寸控制。
+5. **主题适配**  
+   - 必须支持明暗主题切换，所有颜色均通过 CSS 变量管理，禁止硬编码色值。
 
-## 其他规则
-- 图标：使用`<YIco i-{collection}:{icon-name}>`
-- 动画：优先transform/opacity，支持reduced-motion
-- 复用：抽取重复样式为SCSS变量和混合
+设计稿与单位规范：
+- 严格遵循 Material Design 3 设计体系。
+- 所有尺寸单位统一使用 rem/vw/vh，禁止 px 及其他绝对单位。
+- 1 rem = 16px，确保与设计稿标注一致。
+
+响应式断点：
+
+| 断点 | 触发宽度 |
+| ---- | ------- |
+| xs   | 600px   |
+| sm   | 960px   |
+| md   | 1280px  |
+| lg   | 1920px  |
+| xl   | 2560px  |
+| xxl  | ≥2560px |
+
+其他样式规范：
+- **图标**：统一使用 `<YIco class="i-{collection}:{icon-name}">` 组件。
+- **动画**：优先使用 transform/opacity 实现，需兼容 reduced-motion。
+- **样式复用**：重复样式必须抽离为 SCSS 变量或 mixin，禁止冗余代码。
+
+严禁事项：
+- 禁止内联样式、冗余兼容性 hack、重复造轮子（已有工具类不重复实现）。
+- 禁止使用 px 等绝对单位，除非特殊场景有明确理由。
+- 禁止忽略响应式适配与主题适配。
+- 禁止硬编码色值、使用高饱和度刺眼颜色。
+- 禁止用普通 CSS 编写复杂结构，必须用 SCSS。

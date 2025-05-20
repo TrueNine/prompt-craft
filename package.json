@@ -1,7 +1,7 @@
 {
   "name": "@compose/create-prompt",
   "type": "commonjs",
-  "version": "1.0.38",
+  "version": "1.0.39",
   "packageManager": "pnpm@10.8.1",
   "description": "Prompt Craft is an AI-powered prompt engineering tool that utilizes artificial intelligence to generate and improve AI prompts, creating a self-improving loop that continuously optimizes the editor experience.",
   "author": "TrueNine",
